@@ -163,14 +163,7 @@ public class Chess {
 		}
 
 	}
-	public static void method(){ //test method DELETE LATER
-
-
-	}
-	public static void newMethod(){ //DELETE
-
-
-	}
+	
 
 	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){
 
