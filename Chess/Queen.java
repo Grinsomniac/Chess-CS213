@@ -1,7 +1,6 @@
 package chess;
 
 import java.util.*;
-
 public class Queen extends Piece {
 
     private PieceFile queenPieceFile;
@@ -21,6 +20,16 @@ public class Queen extends Piece {
     @Override
     public PieceType getBlackPieceType() {
         return PieceType.BQ;
+    }
+
+    /* 
+    public PieceColor getColor() {
+        return (pieceType == PieceType.WR || pieceType == PieceType.WP) ? PieceColor.white : PieceColor.black;
+    }
+    */
+
+    public boolean getisWhite(){
+        return isWhite;
     }
     
 

@@ -2,7 +2,7 @@ package chess;
 
 import java.util.*;
 
-////NO CHANGES/////////////////////////////////////////
+///////////////////////     NO CHANGES     /////////////////////////////////
 class ReturnPiece {
 	static enum PieceType {
 		WP, WR, WN, WB, WQ, WK,
@@ -32,7 +32,7 @@ class ReturnPiece {
 	}
 }
 
-//// NO CHANGES/////////////////////////////////////////
+///////////////////////     NO CHANGES     /////////////////////////////////
 class ReturnPlay {
 	enum Message {
 		ILLEGAL_MOVE, DRAW,
@@ -45,22 +45,25 @@ class ReturnPlay {
 	Message message;
 }
 
-//////////////// ADD TO CHESS CLASS ONLY//////////////////////
+///////////////////////   ADD TO CHESS CLASS ONLY    ///////////////////////
 public class Chess {
 
-	enum Player {
-		white, black
-	} // No Touch
-
+	enum Player { white, black} // No Touch
+    
+	public static Player currentPlayer; 
 	public static String whitePrompt = "\nWhite's Move: ";
 	public static String blackPrompt = "\nBlack's Move: ";
 	public static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
 	public static ReturnPlay returnPlay = new ReturnPlay();
 	public static int moveCount;
+/* 
 	public static ReturnPiece.PieceFile[] enums = { ReturnPiece.PieceFile.a, ReturnPiece.PieceFile.b,
 			ReturnPiece.PieceFile.c,
 			ReturnPiece.PieceFile.d, ReturnPiece.PieceFile.e, ReturnPiece.PieceFile.f, ReturnPiece.PieceFile.g,
 			ReturnPiece.PieceFile.h };
+
+*/
+	public static ReturnPiece targetPiece = null;
 
 	// public static String[] parts;//Temp
 	public static char targPieceFile;// Temp
@@ -80,73 +83,27 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
-		resignCheck(move); // 1
+		//Testing - Visibility for currentPlayer turn
+		if (currentPlayer == Player.white){
+			System.out.println(whitePrompt);
+		}
+		else {
+			System.out.println(blackPrompt);
+		}
+
+		if (resignCheck(move)){
+			return returnPlay;
+		} // 1
 		parseMove(move);
 		// NextMethod();
 
-		/*
-		 * // Resign
-		 * if (move.toLowerCase().equals("resign")) {
-		 * if (moveCount % 2 == 0) {
-		 * returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
-		 * returnPlay.piecesOnBoard = piecesOnBoard;
-		 * return returnPlay;
-		 * } else {
-		 * returnPlay.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
-		 * returnPlay.piecesOnBoard = piecesOnBoard;
-		 * return returnPlay;
-		 * }
-		 * }
-		 */
-
-		/*
-		 * move = move.trim();
-		 * String[] parts = move.split(" ");
-		 * for (int i = 0; i < parts.length; i++) {
-		 * System.out.println(parts[i]);
-		 * }
-		 * 
-		 * String source = parts[0];
-		 * String destination = parts[1];
-		 * char targPieceFile = source.charAt(0);
-		 * int targPieceRank = ((int) source.charAt(1) - 48);
-		 * char destPieceFile = destination.charAt(0);
-		 * int destPieceRank = ((int) destination.charAt(1) - 48);
-		 */
-
-		// In case of draw
-
-		if (parts.length == 3) {/// Copied to method draw...
-
-			if (parts[2].toLowerCase().equals("draw")) {
-				for (int i = 0; i < piecesOnBoard.size(); i++) {
-					// System.out.println(piecesOnBoard.get(i).toString());
-					if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
-							&& piecesOnBoard.get(i).pieceRank == targPieceRank) {
-						////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						for (int j = 0; j < 8; j++) {
-							if (enums[j].toString().charAt(0) == destPieceFile) {
-								piecesOnBoard.get(i).pieceFile = enums[j];
-							}
-
-						}
-
-						// Adjusting pieceRank and
-						piecesOnBoard.get(i).pieceRank = destPieceRank;
-
-						returnPlay.message = ReturnPlay.Message.DRAW;
-						returnPlay.piecesOnBoard = piecesOnBoard;
-						// System.out.println(piecesOnBoard.get(i).toString());
-						return returnPlay;
-					}
-				}
-
-			}
-		}
-
+		
+			
 		// system.out.println(" sourcePieceFile -> " + source.charAt(0) + " :: " + )
 		System.out.println(" targPieceFile -> " + targPieceFile + " :: " + targPieceRank);
+        
 
+		//Old Code to update Piece File and Rank - STILL HERE FOR REFERENCE 
 		/*
 		 * if (parts.length == 2) {
 		 * for (int i = 0; i < piecesOnBoard.size(); i++) {
@@ -171,26 +128,28 @@ public class Chess {
 		 * 
 		 * return returnPlay;
 		 */
+        
+		 return null; ////COMPILER APPEASEMENT
 
 	}
-
-	public static ReturnPlay resignCheck(String move) {
+	/*
+	 * Boolean resignCheck(String move)
+	 */
+	public static Boolean resignCheck(String move) {
 
 		// Checking for Resign message
 		if (move.trim().toLowerCase().equals("resign")) {
 			if (moveCount % 2 == 0) {
 				returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
 				returnPlay.piecesOnBoard = piecesOnBoard;
-				return returnPlay;
+				return true;
 			} else {
 				returnPlay.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
 				returnPlay.piecesOnBoard = piecesOnBoard;
-				return returnPlay;
+				return true;
 			}
 		}
-		returnPlay.message = null;
-		returnPlay.piecesOnBoard = piecesOnBoard;
-		return returnPlay;
+		return false;
 	}
 
 	public static void parseMove(String move) {
@@ -199,11 +158,20 @@ public class Chess {
 
 		// Testing - For visibility
 		for (int i = 0; i < parts.length; i++) {
-			System.out.println(parts[i]);
+			System.out.print(parts[i] + ", ");
 		}
 
 		String source = parts[0];
 		String destination = parts[1];
+
+		searchPieces(piecesOnBoard, source);
+        
+		//Check to see is player(white/black) is attempting to move their own piece.
+		if (validatePlayerPiece(targetPiece)){
+			//ReturnPlay Object with Invalid turn message
+			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			returnPlay.piecesOnBoard = piecesOnBoard;
+		}
 
 		char targPieceFile = source.charAt(0);
 		int targPieceRank = ((int) source.charAt(1) - 48);// Solve the 48 issue
@@ -242,6 +210,65 @@ public class Chess {
 
 	}
 
+	//Toggle for player turn. Switched between black and white enum values for currentPlayer
+	public static void switchTurn(){
+		if (currentPlayer == Player.white){
+			currentPlayer = Player.black;
+		}
+		currentPlayer = Player.white;
+	}
+
+	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){///////////////////// WORK IN PROGRESS ///////////////////////
+
+		return false;
+
+		 //String targetPieceString = targetPiece.getColor();
+
+		 /* 
+		 if (currentPlayer.equals(targetPiece.getColor())) {
+			return true;
+		 }
+		 return false;	 
+		 */	
+
+
+		/* 
+		 //Testing 
+		 System.out.println("Printing target piece toString(): "  );
+		 for (int i = 0; i < targetPieceString.length(); i++){
+			System.out.print(targetPieceString.charAt(i) + ", ");
+		 }
+
+		 //if (targetPieceString.charAt(3)){}
+		 */
+	}
+
+	//Testing iteration through ArrayList<ReturnPiece> piecesOnBoard to find targetPiece
+	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source /*String destination*/){
+
+		char targetFile = source.charAt(0);
+		int targetRank = (source.charAt(1)-48);
+
+		//ReturnPiece targetPiece = null; -> Moved to static public in Chess class
+
+		// Iterate through the ArrayList to find the Piece
+		for (ReturnPiece piece : piecesOnBoard) {
+    		if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
+        	// Found the Piece with the matching File and Rank
+        		targetPiece = piece;
+        	break;  // Exit the loop once the Piece is found
+    		}
+		}
+		//TESTING FOR PIECE FINDING VISIBILITY 
+		if (targetPiece != null) {
+    		// Handle the case when the Piece is found
+    		System.out.println("Found piece: " + targetPiece);
+		} else {
+    		// Handle the case when the Piece is not found
+   			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
+		}
+	}
+
 	public static void sendMoveToPiece(ReturnPiece.PieceFile pieceFile, int pieceRank) {
 		// SEND TO PIECE
 
@@ -253,12 +280,10 @@ public class Chess {
 	public static void start() {
 
 		// printBoardTest(PlayChess.makeBlankBoard()); //TESTING
-		InitializeBoard(); // Step 1
-		moveCount = 1;
-		// PlayChess.printBoard(piecesOnBoard); //Step 2
-
-		// Will need to be cleaned up:
-		System.out.print(whitePrompt);
+		InitializeBoard(); 
+		currentPlayer = Player.white;
+		moveCount = 1; // Eliminate if redundant with currentPlayer. (Once currentPlayer works)
+		//System.out.print(whitePrompt); //  -> moved to (if then) at top of Chess.play
 
 	}
 
@@ -276,8 +301,6 @@ public class Chess {
 
 	// Creates Pieces and draws starting board. - DONE
 	public static void InitializeBoard() {
-
-		// ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();//TESTING
 
 		// Add white pieces in their correct starting positions
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.a, 1, true));
@@ -307,13 +330,80 @@ public class Chess {
 			piecesOnBoard.add(new Pawn(file, 7, false));
 		}
 
-		/*
-		 * Testing - To validate that all pieces were created
-		 * for (ReturnPiece piece : piecesOnBoard) {
-		 * System.out.println(piece.toString());
-		 * }
+		/* 
+		 //Testing - To validate that all pieces were created
+		 for (ReturnPiece piece : piecesOnBoard) {
+		 	System.out.println(piece.toString());
+		 }
 		 */
+		 
 
 		PlayChess.printBoard(piecesOnBoard);
 	}
 }
+
+
+
+//OLD CODE - Incase needed for Reference 
+
+/* 
+		 // Resign
+		 if (move.toLowerCase().equals("resign")) {
+		 	if (moveCount % 2 == 0) {
+		 		returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+				returnPlay.piecesOnBoard = piecesOnBoard;
+		 	return returnPlay;
+		 	} else {
+		 	returnPlay.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+		 	returnPlay.piecesOnBoard = piecesOnBoard;
+		 	return returnPlay;
+			}
+		}
+		*/
+		 
+
+		/*
+		 * move = move.trim();
+		 * String[] parts = move.split(" ");
+		 * for (int i = 0; i < parts.length; i++) {
+		 * System.out.println(parts[i]);
+		 * }
+		 * 
+		 * String source = parts[0];
+		 * String destination = parts[1];
+		 * char targPieceFile = source.charAt(0);
+		 * int targPieceRank = ((int) source.charAt(1) - 48);
+		 * char destPieceFile = destination.charAt(0);
+		 * int destPieceRank = ((int) destination.charAt(1) - 48);
+		 */
+
+		// In case of draw
+			/* 
+		if (parts.length == 3) {/// Copied to method draw...
+
+			if (parts[2].toLowerCase().equals("draw")) {
+				for (int i = 0; i < piecesOnBoard.size(); i++) {
+					// System.out.println(piecesOnBoard.get(i).toString());
+					if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
+							&& piecesOnBoard.get(i).pieceRank == targPieceRank) {
+						////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						for (int j = 0; j < 8; j++) {
+							if (enums[j].toString().charAt(0) == destPieceFile) {
+								piecesOnBoard.get(i).pieceFile = enums[j];
+							}
+
+						}
+
+						// Adjusting pieceRank and
+						piecesOnBoard.get(i).pieceRank = destPieceRank;
+
+						returnPlay.message = ReturnPlay.Message.DRAW;
+						returnPlay.piecesOnBoard = piecesOnBoard;
+						// System.out.println(piecesOnBoard.get(i).toString());
+						return returnPlay;
+					}
+				}
+
+			}
+		}
+*/

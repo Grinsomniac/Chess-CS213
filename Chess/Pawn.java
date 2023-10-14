@@ -16,6 +16,16 @@ public class Pawn extends Piece {
     public PieceType getBlackPieceType() {
         return PieceType.BP;
     }
+    
+    /* 
+    public PieceColor getColor() {
+        return (pieceType == PieceType.WR || pieceType == PieceType.WP) ? PieceColor.white : PieceColor.black;
+    }
+    */
+
+    public boolean getisWhite(){
+        return isWhite;
+    }
 
     @Override
     public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {

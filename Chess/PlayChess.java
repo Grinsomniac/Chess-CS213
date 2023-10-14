@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class PlayChess {
 
 	public static void main(String[] args) {
+
+		System.out.println("\n********************************\n\nStarting game\n\n********************************\n"); //Testing. Checking that Main is running. 
 		
 		Scanner sc = new Scanner(System.in);
 		Chess.start();                               //Create set of {ReturnPiece -> abstract Piece -> Piece Objects} set to starting positions
@@ -22,7 +24,7 @@ public class PlayChess {
 				continue;
 			}
 			// move 
-			ReturnPlay res = Chess.play(line);       //Sends captures line to 
+			ReturnPlay res = Chess.play(line);       //Sends captures line to Chess.play
 			
 			// print result message
 			if (res.message != null) {

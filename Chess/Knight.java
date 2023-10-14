@@ -1,7 +1,6 @@
 package chess;
 
 import java.util.*;
-
 public class Knight extends Piece {
     public Knight(PieceFile pieceFile, int pieceRank, boolean isWhite){
         super(pieceFile, pieceRank, isWhite);
@@ -16,8 +15,18 @@ public class Knight extends Piece {
     public PieceType getBlackPieceType() {
         return PieceType.BN;
     }
-    
 
+    /* 
+    public PieceColor getColor() {
+        return (pieceType == PieceType.WR || pieceType == PieceType.WP) ? PieceColor.white : PieceColor.black;
+    }
+    */
+
+    public boolean getisWhite(){
+        return isWhite;
+    }
+
+    
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
         // TODO
@@ -28,4 +37,6 @@ public class Knight extends Piece {
     public void executeMove(int newRank, ReturnPiece.PieceFile newFile) {
         // TODO
     }
+
+   
 }
