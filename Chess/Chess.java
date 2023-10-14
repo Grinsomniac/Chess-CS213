@@ -70,7 +70,7 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
-		System.out.println(currentPlayer.toString());
+		System.out.println("Current Player(play1) : " + currentPlayer.toString());//TESTING
 
 		//Testing - Visibility for currentPlayer turn
 		
@@ -84,18 +84,24 @@ public class Chess {
 		// system.out.println(" sourcePieceFile -> " + source.charAt(0) + " :: " + )
 		//System.out.println(" targPieceFile -> " + targPieceFile + " :: " + targPieceRank);
 
+
+		//Afterstate of target piece
 		System.out.println(targetPiece.toString());
         
 	  //return null; // 
 
 	  //If move is completely Valid
 		switchTurn();
+		System.out.println("Current Player(play2): " + currentPlayer.toString());//TESTING
+
+		/* 
 		if (currentPlayer == Player.white){
 			System.out.print(whitePrompt + " ");
 		}
 		else {
 			System.out.print(blackPrompt + " ");
 		}
+		*/
 		returnPlay.message = null;
 		returnPlay.piecesOnBoard = piecesOnBoard;
         return returnPlay; 
@@ -108,7 +114,7 @@ public class Chess {
 
 		// Checking for Resign message
 		if (move.trim().toLowerCase().equals("resign")) {
-			if (moveCount % 2 == 0) {
+			if (currentPlayer == Player.black) {
 				returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
 				returnPlay.piecesOnBoard = piecesOnBoard;
 				return true;
@@ -172,10 +178,15 @@ public class Chess {
 		if (currentPlayer == Player.white){
 			currentPlayer = Player.black;
 		}
+		else{
 		currentPlayer = Player.white;
+		}
+
 	}
 
 	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){///////////////////// WORK IN PROGRESS ///////////////////////
+
+		//if(targetPiece.getisWhite() && currentPlayer == Player.white){}
 
 		return true;
 
@@ -238,7 +249,11 @@ public class Chess {
 		InitializeBoard(); 
 		currentPlayer = Player.white;
 		moveCount = 0; // Eliminate if redundant with currentPlayer. (Once currentPlayer works)
+
+		System.out.println("Current Player(start): " + currentPlayer.toString());//TESTING
+
 		System.out.print(whitePrompt); // -> Copied to (if then) at top of Chess.play for Resign check
+
 
 	}
 
