@@ -56,7 +56,11 @@ public class Chess {
 	public static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
 	public static ReturnPlay returnPlay = new ReturnPlay();
 	public static int moveCount;
+	public static String source;
+	public static String destination;
+
 	public static ReturnPiece targetPiece = null;
+
 
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -78,7 +82,17 @@ public class Chess {
 			return returnPlay;
 		} // 1
 		parseMove(move);
-		
+
+		//NOT WORKING YET - validatePlayerPiece is set to return "true" for now
+		//Check to see is player(white/black) is attempting to move their own piece.
+		if (!validatePlayerPiece(targetPiece)){
+			//ReturnPlay Object with Invalid turn message
+			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			returnPlay.piecesOnBoard = piecesOnBoard;
+			return returnPlay;	
+		}
+
+		movePiece(targetPiece, destination);
 	
 		//Confirm before and after of targetPiece to ensure move was captured
 		// system.out.println(" sourcePieceFile -> " + source.charAt(0) + " :: " + )
@@ -136,27 +150,10 @@ public class Chess {
 			System.out.print(parts[i] + ", ");
 		}
 
-		String source = parts[0];
-		String destination = parts[1];
+		source = parts[0];
+		destination = parts[1];
 
 		searchPieces(piecesOnBoard, source);
-
-		//NOT WORKING YET - validatePlayerPiece is set to return "true" for now
-		//Check to see is player(white/black) is attempting to move their own piece.
-		if (validatePlayerPiece(targetPiece)){
-			//ReturnPlay Object with Invalid turn message
-			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			returnPlay.piecesOnBoard = piecesOnBoard;
-		}
-
-		movePiece(targetPiece, destination);
-
-		// piece.isMoveValid(); - Boolean
-		/*
-		 * if True - > ReturnPlay
-		 * 
-		 * 
-		 */
 
 		//	if (parts.length == 3) { draw(); }  // Need to finish 
 	}
@@ -186,9 +183,16 @@ public class Chess {
 
 	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){///////////////////// WORK IN PROGRESS ///////////////////////
 
-		//if(targetPiece.getisWhite() && currentPlayer == Player.white){}
+		if(targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white){
+			return true;
+		}
+		else{
+			if(targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black){
+				return true;
+			}
+		}
+		return false;
 
-		return true;
 
 		 //String targetPieceString = targetPiece.getColor();
 
