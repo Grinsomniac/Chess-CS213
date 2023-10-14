@@ -74,7 +74,6 @@ public class Chess {
 
 		//Testing - Visibility for currentPlayer turn
 		
-
 		if (resignCheck(move)){
 			return returnPlay;
 		} // 1
@@ -146,6 +145,7 @@ public class Chess {
 
 		movePiece(targetPiece, destination);
 
+		
 		char targPieceFile = source.charAt(0);
 		int targPieceRank = ((int) source.charAt(1) - 48);// Solve the 48 issue
 		char destPieceFile = destination.charAt(0);
@@ -162,6 +162,8 @@ public class Chess {
 				System.out.println(pieceType.toString());
 			}
 		}
+		
+		
 
 		// piece.isMoveValid(); - Boolean
 		/*

@@ -7,6 +7,7 @@ public abstract class Piece extends ReturnPiece {
     public static enum PieceColor { white, black}; //Trying enum to capture color for getter/setter
     //PieceColor pieceColor;
     public static boolean isWhite;
+    public static int pieceMoveCount; // FOR PAWN MOVEMENT, CASTLING (ROOK & KING)
 
     // Constructor
     public Piece(PieceFile pieceFile, int pieceRank, boolean isWhite) {
