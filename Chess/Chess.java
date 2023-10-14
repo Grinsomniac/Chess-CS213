@@ -56,20 +56,7 @@ public class Chess {
 	public static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
 	public static ReturnPlay returnPlay = new ReturnPlay();
 	public static int moveCount;
-/* 
-	public static ReturnPiece.PieceFile[] enums = { ReturnPiece.PieceFile.a, ReturnPiece.PieceFile.b,
-			ReturnPiece.PieceFile.c,
-			ReturnPiece.PieceFile.d, ReturnPiece.PieceFile.e, ReturnPiece.PieceFile.f, ReturnPiece.PieceFile.g,
-			ReturnPiece.PieceFile.h };
-
-*/
 	public static ReturnPiece targetPiece = null;
-
-	// public static String[] parts;//Temp
-	public static char targPieceFile;// Temp
-	public static int targPieceRank;// Temp
-	public static char destPieceFile;// Temp
-	public static int destPieceRank;// Temp
 
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -83,53 +70,36 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
+		System.out.println(currentPlayer.toString());
+
 		//Testing - Visibility for currentPlayer turn
-		if (currentPlayer == Player.white){
-			System.out.println(whitePrompt);
-		}
-		else {
-			System.out.println(blackPrompt);
-		}
+		
 
 		if (resignCheck(move)){
 			return returnPlay;
 		} // 1
 		parseMove(move);
 		// NextMethod();
-
-		
-			
+	
+		//Confirm before and after of targetPiece to ensure move was captured
 		// system.out.println(" sourcePieceFile -> " + source.charAt(0) + " :: " + )
-		System.out.println(" targPieceFile -> " + targPieceFile + " :: " + targPieceRank);
-        
+		//System.out.println(" targPieceFile -> " + targPieceFile + " :: " + targPieceRank);
 
-		//Old Code to update Piece File and Rank - STILL HERE FOR REFERENCE 
-		/*
-		 * if (parts.length == 2) {
-		 * for (int i = 0; i < piecesOnBoard.size(); i++) {
-		 * 
-		 * if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
-		 * && piecesOnBoard.get(i).pieceRank == targPieceRank) {
-		 * 
-		 * for (int j = 0; j < 8; j++) {//LOOK HERE
-		 * if (enums[j].toString().charAt(0) == destPieceFile) {
-		 * piecesOnBoard.get(i).pieceFile = enums[j];
-		 * }
-		 * 
-		 * }
-		 * piecesOnBoard.get(i).pieceRank = destPieceRank;
-		 * returnPlay.message = null;
-		 * returnPlay.piecesOnBoard = piecesOnBoard;
-		 * 
-		 * return returnPlay;
-		 * }
-		 * }
-		 * }
-		 * 
-		 * return returnPlay;
-		 */
+		System.out.println(targetPiece.toString());
         
-		 return null; ////COMPILER APPEASEMENT
+	//	return null; // 
+
+	//	If move is completely Valid
+		switchTurn();
+		if (currentPlayer == Player.white){
+			System.out.print(whitePrompt + " ");
+		}
+		else {
+			System.out.print(blackPrompt + " ");
+		}
+		returnPlay.message = null;
+		returnPlay.piecesOnBoard = piecesOnBoard;
+        return returnPlay; 
 
 	}
 	/*
@@ -165,13 +135,16 @@ public class Chess {
 		String destination = parts[1];
 
 		searchPieces(piecesOnBoard, source);
-        
+
+		//NOT WORKING YET - validatePlayerPiece is set to return "true" for now
 		//Check to see is player(white/black) is attempting to move their own piece.
 		if (validatePlayerPiece(targetPiece)){
 			//ReturnPlay Object with Invalid turn message
 			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			returnPlay.piecesOnBoard = piecesOnBoard;
 		}
+
+		movePiece(targetPiece, destination);
 
 		char targPieceFile = source.charAt(0);
 		int targPieceRank = ((int) source.charAt(1) - 48);// Solve the 48 issue
@@ -197,17 +170,19 @@ public class Chess {
 		 * 
 		 */
 
-		if (parts.length == 3) {
-			draw();
-		}
+	//	if (parts.length == 3) { draw(); }  // Need to finish 
 	}
 
-	public static void draw() {
+//	public static void draw() {}  // Need to Finish
 
-	}
+	public static void movePiece(ReturnPiece targetPiece, String destination) {
 
-	public static void movePiece() {
+		char targetFile = destination.charAt(0);
+		int targetRank = (destination.charAt(1)-48);
 
+		// Update the file and rank of the targetPiece
+		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+		targetPiece.pieceRank = targetRank;
 	}
 
 	//Toggle for player turn. Switched between black and white enum values for currentPlayer
@@ -220,7 +195,7 @@ public class Chess {
 
 	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){///////////////////// WORK IN PROGRESS ///////////////////////
 
-		return false;
+		return true;
 
 		 //String targetPieceString = targetPiece.getColor();
 
@@ -268,26 +243,24 @@ public class Chess {
    			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
 		}
 	}
-
-	public static void sendMoveToPiece(ReturnPiece.PieceFile pieceFile, int pieceRank) {
-		// SEND TO PIECE
-
-	}
+	
+	//Send move to Piece - Possibly redundant
+//	public static void sendMoveToPiece(ReturnPiece.PieceFile pieceFile, int pieceRank) {}
 
 	/**
 	 * This method should reset the game, and start from scratch. - DONE
 	 */
 	public static void start() {
 
-		// printBoardTest(PlayChess.makeBlankBoard()); //TESTING
+	//	printBoardTest(PlayChess.makeBlankBoard()); //TESTING
 		InitializeBoard(); 
 		currentPlayer = Player.white;
-		moveCount = 1; // Eliminate if redundant with currentPlayer. (Once currentPlayer works)
-		//System.out.print(whitePrompt); //  -> moved to (if then) at top of Chess.play
+		moveCount = 0; // Eliminate if redundant with currentPlayer. (Once currentPlayer works)
+		System.out.print(whitePrompt); // -> Copied to (if then) at top of Chess.play for Resign check
 
 	}
 
-	// Testing Board Print - DONE
+//	Testing Board Print - DONE
 	public static void printBoardTest(String[][] board) {
 
 		for (int r = 0; r < 8; r++) {
@@ -337,7 +310,6 @@ public class Chess {
 		 }
 		 */
 		 
-
 		PlayChess.printBoard(piecesOnBoard);
 	}
 }
@@ -345,6 +317,48 @@ public class Chess {
 
 
 //OLD CODE - Incase needed for Reference 
+
+/* 
+	public static ReturnPiece.PieceFile[] enums = { ReturnPiece.PieceFile.a, ReturnPiece.PieceFile.b,
+			ReturnPiece.PieceFile.c,
+			ReturnPiece.PieceFile.d, ReturnPiece.PieceFile.e, ReturnPiece.PieceFile.f, ReturnPiece.PieceFile.g,
+			ReturnPiece.PieceFile.h };
+
+*/
+
+
+	// public static String[] parts;//Temp
+	//public static char targPieceFile;// Temp
+	//public static int targPieceRank;// Temp
+	//public static char destPieceFile;// Temp
+	//public static int destPieceRank;// Temp
+
+//Old Code to update Piece File and Rank - STILL HERE FOR REFERENCE 
+		/*
+		 * if (parts.length == 2) {
+		 * for (int i = 0; i < piecesOnBoard.size(); i++) {
+		 * 
+		 * if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
+		 * && piecesOnBoard.get(i).pieceRank == targPieceRank) {
+		 * 
+		 * for (int j = 0; j < 8; j++) {//LOOK HERE
+		 * if (enums[j].toString().charAt(0) == destPieceFile) {
+		 * piecesOnBoard.get(i).pieceFile = enums[j];
+		 * }
+		 * 
+		 * }
+		 * piecesOnBoard.get(i).pieceRank = destPieceRank;
+		 * returnPlay.message = null;
+		 * returnPlay.piecesOnBoard = piecesOnBoard;
+		 * 
+		 * return returnPlay;
+		 * }
+		 * }
+		 * }
+		 * 
+		 * return returnPlay;
+		 */
+
 
 /* 
 		 // Resign
