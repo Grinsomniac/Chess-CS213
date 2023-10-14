@@ -78,7 +78,7 @@ public class Chess {
 			return returnPlay;
 		} // 1
 		parseMove(move);
-		// NextMethod();
+		
 	
 		//Confirm before and after of targetPiece to ensure move was captured
 		// system.out.println(" sourcePieceFile -> " + source.charAt(0) + " :: " + )
@@ -86,9 +86,9 @@ public class Chess {
 
 		System.out.println(targetPiece.toString());
         
-	//	return null; // 
+	  //return null; // 
 
-	//	If move is completely Valid
+	  //If move is completely Valid
 		switchTurn();
 		if (currentPlayer == Player.white){
 			System.out.print(whitePrompt + " ");
@@ -145,26 +145,6 @@ public class Chess {
 
 		movePiece(targetPiece, destination);
 
-		
-		char targPieceFile = source.charAt(0);
-		int targPieceRank = ((int) source.charAt(1) - 48);// Solve the 48 issue
-		char destPieceFile = destination.charAt(0);
-		int destPieceRank = ((int) destination.charAt(1) - 48);//// Solve the 48 issue
-		ReturnPiece piece;
-		ReturnPiece.PieceType pieceType;
-		for (int i = 0; i < piecesOnBoard.size(); i++) {
-			// System.out.println(piecesOnBoard.get(i).toString());
-			if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
-					&& piecesOnBoard.get(i).pieceRank == targPieceRank) {
-				piece = piecesOnBoard.get(i); // gets the piece object to be moved
-				pieceType = piecesOnBoard.get(i).pieceType; // gets the type of the piece to be moved
-
-				System.out.println(pieceType.toString());
-			}
-		}
-		
-		
-
 		// piece.isMoveValid(); - Boolean
 		/*
 		 * if True - > ReturnPlay
@@ -172,10 +152,10 @@ public class Chess {
 		 * 
 		 */
 
-	//	if (parts.length == 3) { draw(); }  // Need to finish 
+		//	if (parts.length == 3) { draw(); }  // Need to finish 
 	}
 
-//	public static void draw() {}  // Need to Finish
+	public static void draw() {}  // Need to Finish
 
 	public static void movePiece(ReturnPiece targetPiece, String destination) {
 
@@ -360,7 +340,27 @@ public class Chess {
 		 * 
 		 * return returnPlay;
 		 */
+		
+		 /* 
+		char targPieceFile = source.charAt(0);
+		int targPieceRank = ((int) source.charAt(1) - 48);// Solve the 48 issue
+		char destPieceFile = destination.charAt(0);
+		int destPieceRank = ((int) destination.charAt(1) - 48);//// Solve the 48 issue
+		ReturnPiece piece;
+		ReturnPiece.PieceType pieceType;
+		
+		
+		for (int i = 0; i < piecesOnBoard.size(); i++) {
+			// System.out.println(piecesOnBoard.get(i).toString());
+			if (piecesOnBoard.get(i).pieceFile.toString().charAt(0) == targPieceFile
+					&& piecesOnBoard.get(i).pieceRank == targPieceRank) {
+				piece = piecesOnBoard.get(i); // gets the piece object to be moved
+				pieceType = piecesOnBoard.get(i).pieceType; // gets the type of the piece to be moved
 
+				System.out.println(pieceType.toString());
+			}
+		}
+		*/
 
 /* 
 		 // Resign
