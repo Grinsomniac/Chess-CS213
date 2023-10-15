@@ -54,6 +54,30 @@ public class Queen extends Piece {
             currentFile = PieceFile.values()[currentFile.ordinal() + fileDirection];
         }
 
+        // Check if there is a piece at the destination
+        for (ReturnPiece piece : piecesOnBoard) {
+            if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
+                if (piece.pieceType.toString().charAt(0) != pieceType.toString().charAt(0)) {
+                    // The move is valid for capturing an opponent's piece
+                    if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    return true;
+                }
+                else{
+                if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
+                                                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        return true;
+                }
+                else{
+                    return false;
+                }
+            }
+                }
+                return false;
+            }
+        }
+
         // The move is valid for a queen and unobstructed
         return true;
     }
@@ -61,25 +85,6 @@ public class Queen extends Piece {
     // The move is not valid for a queen
     return false;
     }
-
-    public boolean isMoveValid(int newRank, PieceFile newFile) {
-        // Check if the new rank and new file are the same as the current rank and file
-    if (newRank == pieceRank && newFile == pieceFile) {
-        // The queen hasn't moved, which is not a valid move
-        return false;
-    }
-
-    // Calculate the absolute differences between ranks and files
-    int rankDifference = Math.abs(newRank - pieceRank);
-    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-
-    // Queens can move vertically, horizontally, or diagonally
-    if (rankDifference == 0 || fileDifference == 0 || rankDifference == fileDifference) {
-        // The move is valid for a queen
-        return true;
-    }
-
-    // The move is not valid for a queen
-    return false;
-    }
 }
+
+
