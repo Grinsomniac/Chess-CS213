@@ -17,19 +17,12 @@ public class Bishop extends Piece {
         return PieceType.BB;
     }
 
-    /*
-     * public PieceColor getColor() {
-     * return (pieceType == PieceType.WR || pieceType == PieceType.WP) ?
-     * PieceColor.white : PieceColor.black;
-     * }
-     */
-
     public boolean getisWhite() {
         return isWhite;
     }
 
     @Override
-    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
+    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
         // Check if the new rank and new file are the same as the current rank and file
     if (newRank == pieceRank && newFile == pieceFile) {
         // The bishop hasn't moved, which is not a valid move
@@ -67,50 +60,14 @@ public class Bishop extends Piece {
     // The move is valid for a bishop and unobstructed
     return true;
     }
-
-    public boolean isMoveValid(int newRank, PieceFile newFile) {
-
-        System.out.println("IN ROOK isMOVEVALID");
-        // Check if the new rank and new file are the same as the current rank and file
-    if (newRank == pieceRank && newFile == pieceFile) {
-        // The bishop hasn't moved, which is not a valid move
-        return false;
-    }
-
-    // Check if the absolute difference between ranks and files is the same
-    int rankDifference = Math.abs(newRank - pieceRank);
-    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-
-    if (rankDifference == fileDifference) {
-        // The move is diagonal, which is valid for a bishop
-        return true;
-    }
-
-    // The move is not valid for a bishop
-    return false;
-    }
-
-    @Override
-    public void executeMove(int newRank, ReturnPiece.PieceFile newFile) {
-        // TODO
-    }
-
-    public boolean isMoveValidTest(int newRank, PieceFile newFile) {
-        System.out.println("In isMoveValidTest");
-
-        return true;
-    }
-
+    
     @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'capture'");
-    }
-
-    @Override
-    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard,
-            boolean playerWhite) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
+        /// Remove the captured piece from the list
+        for(int i = 0; i < piecesOnBoard.size(); i++){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
+                 piecesOnBoard.remove(i);
+            }
+        }
     }
 }

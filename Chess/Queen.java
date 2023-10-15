@@ -4,12 +4,8 @@ import java.util.*;
 
 public class Queen extends Piece {
 
-    private PieceFile queenPieceFile;
-    private int queenPieceRank;
-
     public Queen(PieceFile pieceFile, int pieceRank, boolean isWhite) {
         super(pieceFile, pieceRank, isWhite);
-
     }
 
     @Override
@@ -22,19 +18,12 @@ public class Queen extends Piece {
         return PieceType.BQ;
     }
 
-    /*
-     * public PieceColor getColor() {
-     * return (pieceType == PieceType.WR || pieceType == PieceType.WP) ?
-     * PieceColor.white : PieceColor.black;
-     * }
-     */
-
     public boolean getisWhite() {
         return isWhite;
     }
 
     @Override
-    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
+    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
         // Check if the new rank and new file are the same as the current rank and file
     if (newRank == pieceRank && newFile == pieceFile) {
         // The queen hasn't moved, which is not a valid move
@@ -95,24 +84,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void executeMove(int newRank, ReturnPiece.PieceFile newFile) {
-        // TODO
-    }
-
-    public boolean isMoveValidTest(int newRank, PieceFile newFile) {
-        System.out.println("In isMoveValidTest");
-
-        return true;
-    }
-
-    @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'capture'");
-    }
-
-    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite){      // DELETE LATER
-        return true;
+        // Remove the captured piece from the list
+        for(int i = 0; i < piecesOnBoard.size(); i++){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
+                 piecesOnBoard.remove(i);
+            }
+        }
     }
 
 }

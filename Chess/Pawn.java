@@ -93,68 +93,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void executeMove(int newRank, PieceFile newFile) {
-        if (isMoveValid(newRank, newFile)) {
-            this.pieceFile = newFile;
-            this.pieceRank = newRank;
-        }
-        ReturnPlay returnPlay = new ReturnPlay();
-        returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-
-    }
-
-    public boolean isMoveValid(int newRank, PieceFile newFile) {
-        if (isWhite) {
-            int rankDifference = (newRank - pieceRank);
-            int fileDifference = (newFile.ordinal() - pieceFile.ordinal());
-            if ((rankDifference == 1 && fileDifference == 0)
-                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 2)) {
-                return true;
-            }
-        } else {
-            int rankDifference = (pieceRank - newRank);
-            int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-            if ((rankDifference == 1 && fileDifference == 0)
-                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 7)) {
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    public boolean isMoveValidTest(int newRank, PieceFile newFile) {
-        System.out.println("In isMoveValidTest");
-
-        return true;
-    }
-
-    @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
-
         // Remove the captured piece from the list
         for(int i = 0; i < piecesOnBoard.size(); i++){
             if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
                  piecesOnBoard.remove(i);
             }
         }
-      
-        
-
-        // Update the position of the capturing piece
-        //targetPiece.pieceFile = takePiece.pieceFile;
-        //targetPiece.pieceRank = takePiece.pieceRank;
     }
-
-        public boolean isMoveValid(int a, ReturnPiece.PieceFile b, ArrayList<ReturnPiece> c){   // delete later
-            return true;
-        }
-
-/* 
-	@Override
-	public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
-	}
-*/
 }
