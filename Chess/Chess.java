@@ -149,6 +149,9 @@ public class Chess {
 
 		// if(targetPiece.PieceType.toString().charAt(1))
 
+		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+		targetPiece.pieceRank = targetRank;
+		
 		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
 			Pawn castedPawnPiece = (Pawn) targetPiece;
 			System.out.println("casted piece file:" + castedPawnPiece.toString());
@@ -232,9 +235,21 @@ public class Chess {
 
 	public static Boolean validateMove(ReturnPiece targetPiece) {
 
-		char targetFile = destination.charAt(0);
+
+				char targetFile = destination.charAt(0);
 		int targetRank = (destination.charAt(1) - 48);
-		Pawn castedPiece = (Pawn) targetPiece;
+
+		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)){
+			return true;
+		} else {
+			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black))
+			return true;
+		}
+		
+		return false;	
+		
+		/*
+	    Pawn castedPiece = (Pawn) targetPiece;
 		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)
 				&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
 			return true;
@@ -242,9 +257,10 @@ public class Chess {
 			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black)
 					&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
 				return true;
-			}
+			}		
 		}
-		return false;
+		*/		
+		
 	}
 
 	// Searches ArrayList<ReturnPiece> for targetPiece
