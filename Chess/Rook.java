@@ -106,6 +106,12 @@ public class Rook extends Piece {
 
         return true;
     }
+
+    @Override
+    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'capture'");
+    }
 }
 
 /* 

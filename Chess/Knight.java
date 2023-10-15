@@ -76,4 +76,11 @@ public class Knight extends Piece {
         return true;
     }
 
+    @Override
+    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+      
+            
+
+    }
+
 }

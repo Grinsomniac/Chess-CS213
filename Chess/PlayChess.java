@@ -70,7 +70,7 @@ public class PlayChess {
 		}
 		return board;
 	}
-	
+
 	static void printPiecesOnBoard(
 			ArrayList<ReturnPiece> pieces, String[][] board) {
 		for (ReturnPiece rp: pieces) {

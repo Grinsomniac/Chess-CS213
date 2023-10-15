@@ -100,4 +100,17 @@ public class Bishop extends Piece {
 
         return true;
     }
+
+    @Override
+    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'capture'");
+    }
+
+    @Override
+    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard,
+            boolean playerWhite) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
+    }
 }

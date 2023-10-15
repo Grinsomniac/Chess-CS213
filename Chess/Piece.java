@@ -2,6 +2,7 @@ package chess;
 
 import java.util.*;
 
+
 public abstract class Piece extends ReturnPiece {
 
     public boolean isWhite;
@@ -22,13 +23,17 @@ public abstract class Piece extends ReturnPiece {
 
     public abstract boolean getisWhite();
 
-    public abstract boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard);
+    public abstract boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite);
 
     public abstract boolean isMoveValid(int newRank, PieceFile newFile);
 
     public abstract boolean isMoveValidTest(int newRank, PieceFile newFile);
 
     public abstract void executeMove(int newRank, PieceFile newFile);
+
+    public abstract void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard);
+
+
 
 }
 

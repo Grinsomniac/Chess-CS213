@@ -1,7 +1,7 @@
 package chess;
 
 import java.util.*;
-
+import chess.*;
 public class Pawn extends Piece {
     public Pawn(PieceFile pieceFile, int pieceRank, boolean isWhite) {
         super(pieceFile, pieceRank, isWhite);
@@ -22,33 +22,45 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
+    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
         // Check if the new rank and new file are the same as the current rank and file
-    if (newRank == pieceRank && newFile == pieceFile) {
+        if (newRank == pieceRank && newFile == pieceFile) {
         // The pawn hasn't moved, which is not a valid move
-        return false;
-    }
+            return false;
+        }
+        int rankDifference;
+        int fileDifference;
+        if(getisWhite()){
+            rankDifference = (newRank - pieceRank);
+            fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+        }
+        else{
+             rankDifference = (pieceRank - newRank);
+             fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+        }
+        
+        // Determine the direction of movement
+        int rankDirection = Integer.compare(newRank, pieceRank);
+        int fileDirection = Integer.compare(newFile.ordinal(), pieceFile.ordinal());
 
-    // Calculate the absolute differences between ranks and files
-    int rankDifference = Math.abs(newRank - pieceRank);
-    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-
-    // Determine the direction of movement
-    int rankDirection = Integer.compare(newRank, pieceRank);
-    int fileDirection = Integer.compare(newFile.ordinal(), pieceFile.ordinal());
-
-    // Pawns move differently on their initial and subsequent moves
-    if (rankDifference == 1 && fileDifference == 0) {
+        // Pawns move differently on their initial and subsequent moves
+        if (rankDifference == 1 && fileDifference == 0) {
         // Subsequent move: one square forward
         for (ReturnPiece piece : piecesOnBoard) {
             if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
                 // The move is obstructed by another piece
-                return false;
+                if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){    //maybe doesnt work
+                                                                                    //implement way to call capture method
+                     
+                    
+                }
+                
+                //return false;
             }
         }
         return true;
-    } else if (rankDifference == 2 && fileDifference == 0 && pieceRank == 2 && fileDirection == 0) {
-        // Initial move: two squares forward from the second rank
+        }  else if (rankDifference == 2 && fileDifference == 0 && ((isWhite && pieceRank == 2) || (!isWhite && pieceRank == 7)) && fileDirection == 0) {
+        // Initial move: two squares forward from the second rank (based on whether it's a white or black pawn)
         int intermediateRank = pieceRank + rankDirection;
         for (ReturnPiece piece : piecesOnBoard) {
             if ((piece.pieceRank == intermediateRank && piece.pieceFile == pieceFile) || (piece.pieceRank == newRank && piece.pieceFile == newFile)) {
@@ -66,7 +78,7 @@ public class Pawn extends Piece {
             }
         }
     }
-    
+
     // The move is not valid for a pawn
     return false;
     }
@@ -134,5 +146,30 @@ public class Pawn extends Piece {
 
         return true;
     }
+
+    @Override
+    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+
+        // Remove the captured piece from the list
+        piecesOnBoard.remove(takePiece);
+
+        // Update the position of the capturing piece
+        targetPiece.pieceFile = takePiece.pieceFile;
+        targetPiece.pieceRank = takePiece.pieceRank;
+     
+
+            for(int i = 0; i < piecesOnBoard.size(); i++){
+                if(piecesOnBoard.get(i).pieceFile.toString().charAt())
+            }
+        
+
+
+    }
+
+	@Override
+	public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
+	}
 
 }
