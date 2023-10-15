@@ -25,8 +25,37 @@ public abstract class Piece extends ReturnPiece {
 
     public abstract boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite);
 
+    public abstract boolean isMoveValid(int newRank, PieceFile newFile);
+
+    public abstract boolean isMoveValidTest(int newRank, PieceFile newFile);
+
+    public abstract void executeMove(int newRank, PieceFile newFile);
+
     public abstract void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard);
 
-   
+    public abstract boolean isMoveValid(int a, ReturnPiece.PieceFile b, ArrayList<ReturnPiece> c);
 
 }
+
+ //public abstract boolean isMoveValid(int newRank, PieceFile newFile);
+
+/*
+ * // Common method for moving a piece
+ * public void movePiece(int newRank, PieceFile newFile, ArrayList<Piece>
+ * piecesOnBoard) {
+ * if (isMoveValid(newRank, newFile, piecesOnBoard)) {
+ * executeMove(newRank, newFile);
+ * }
+ * 
+ * boolean validateMove(String move){
+ * 
+ * 
+ * return true;///Compiler appeasement
+ * 
+ * }
+ */
+
+// pieceFile inherited from ReturnPiece
+// pieceRank inherited from ReturnPiece
+// public static boolean isWhite;
+// this.isWhite = isWhite;
