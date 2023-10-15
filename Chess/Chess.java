@@ -32,7 +32,7 @@ class ReturnPiece {
 	}
 }
 
-/////////////////////// NO CHANGES /////////////////////////////////
+///////////////////////     NO CHANGES     /////////////////////////////////
 class ReturnPlay {
 	enum Message {
 		ILLEGAL_MOVE, DRAW,
@@ -45,12 +45,10 @@ class ReturnPlay {
 	Message message;
 }
 
-/////////////////////// ADD TO CHESS CLASS ONLY ///////////////////////
+///////////////////////   ADD TO CHESS CLASS ONLY    //////////////////////
 public class Chess {
 
-	enum Player {
-		white, black
-	} // No Touch
+	enum Player {white, black} // No Touch
 
 	public static Player currentPlayer;
 	public static String whitePrompt = "\nWhite's Move: ";
@@ -64,23 +62,15 @@ public class Chess {
 	public static ReturnPiece targetPiece = null;
 	public static boolean playerWhite;
 	
-	/**
-	 * Plays the next move for whichever player has the turn.
-	 * 
-	 * @param move String for next move, e.g. "a2 a3"
-	 * @return A ReturnPlay instance that contains the result of the move.
-	 *         See the section "The Chess class" in the assignment description for
-	 *         details of
-	 *         the contents of the returned ReturnPlay instance.
-	 */
 	public static ReturnPlay play(String move) {
 
-		System.out.println("Current Player(play1) : " + currentPlayer.toString());// TESTING
+		System.out.println("\nCurrent Player : " + currentPlayer.toString());// TESTING
 
-		// Testing - Visibility for currentPlayer turn
+		//Check for resign input
 		if (resignCheck(move)) {
 			return returnPlay;
 		}
+		//Parse Move input if resign not present
 		parseMove(move);
 
 		// Validates correct players piece is moved
@@ -93,19 +83,21 @@ public class Chess {
 
 		movePiece(targetPiece, destination);
 
-		// Afterstate of target piece
-		System.out.println(targetPiece.toString());
+		//Afterstate of target piece
+		//System.out.println(targetPiece.toString());
 
 		// If move is completely Valid
 		switchTurn();
-		System.out.println("Current Player(play2): " + currentPlayer.toString());// TESTING
-
+		
+		/* //CHECK FOR DRAW - FINISH THIS
 		if (parts.length == 2) {
 			returnPlay.message = null;
 		}
 		if (parts.length == 3) {
 			returnPlay.message = ReturnPlay.Message.DRAW;
 		}
+		*/
+
 		returnPlay.piecesOnBoard = piecesOnBoard;
 		return returnPlay;
 
@@ -129,13 +121,9 @@ public class Chess {
 	}
 
 	public static void parseMove(String move) {
+		
 		move = move.trim();
 		parts = move.split(" ");
-
-		// Testing - For visibility
-		for (int i = 0; i < parts.length; i++) {
-			System.out.print(parts[i] + ", ");
-		}
 
 		source = parts[0];
 		destination = parts[1];
@@ -143,36 +131,29 @@ public class Chess {
 		searchPieces(piecesOnBoard, source);
 	}
 
-	public static void movePiece(ReturnPiece targetPiece, String destination) {
+	// Searches ArrayList<ReturnPiece> for targetPiece
+	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source) {
 
-		char targetFile = destination.charAt(0);
-		int targetRank = (destination.charAt(1) - 48);
+		char targetFile = source.charAt(0);
+		int targetRank = (source.charAt(1) - 48);
 
-		// if(targetPiece.PieceType.toString().charAt(1))
-
-
-		
-		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-		targetPiece.pieceRank = targetRank;
-		
-		// Update file and rank for targetPiece
-
-	}
-
-	// Toggle for player turn.
-	public static void switchTurn() {
-		if (currentPlayer == Player.white) {
-			currentPlayer = Player.black;
-			playerWhite = false;
-		} else {
-			currentPlayer = Player.white;
-			playerWhite = true;
+		// Iterate through the ArrayList to find the Piece
+		for (ReturnPiece piece : piecesOnBoard) {
+			if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
+				// Found the Piece with the matching File and Rank
+				targetPiece = piece;
+				break; // Exit the loop once the Piece is found
+			}
 		}
-
+		// TESTING FOR PIECE FINDING VISIBILITY
+		if (targetPiece != null) {
+			System.out.println("Found piece: " + targetPiece);
+		} else {
+			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
+		}
 	}
 
 	public static Boolean validateMove(ReturnPiece targetPiece) {
-
 
 		char targetFile = destination.charAt(0);
 		int targetRank = (destination.charAt(1) - 48);
@@ -246,31 +227,32 @@ public class Chess {
 
 		return false;
 			
-		
 	}
 
-	// Searches ArrayList<ReturnPiece> for targetPiece
-	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source) {
+	public static void movePiece(ReturnPiece targetPiece, String destination) {
 
-		char targetFile = source.charAt(0);
-		int targetRank = (source.charAt(1) - 48);
+		//Separating String destination into File and Rank
+		char targetFile = destination.charAt(0);
+		int targetRank = (destination.charAt(1) - 48);
 
-		// Iterate through the ArrayList to find the Piece
-		for (ReturnPiece piece : piecesOnBoard) {
-			if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
-				// Found the Piece with the matching File and Rank
-				targetPiece = piece;
-				break; // Exit the loop once the Piece is found
-			}
-		}
-		// TESTING FOR PIECE FINDING VISIBILITY
-		if (targetPiece != null) {
-			System.out.println("Found piece: " + targetPiece);
+		// Update file and rank for targetPiece
+		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+		targetPiece.pieceRank = targetRank;
+
+	}
+
+	// Toggle for player turn.
+	public static void switchTurn() {
+		if (currentPlayer == Player.white) {
+			currentPlayer = Player.black;
+			playerWhite = false;
 		} else {
-			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
+			currentPlayer = Player.white;
+			playerWhite = true;
 		}
 	}
 
+	///////////////////////     GAME START     /////////////////////////////////
 	// reset the game, and start from scratch. - DONE
 	public static void start() {
 		InitializeBoard();

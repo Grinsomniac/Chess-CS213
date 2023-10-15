@@ -112,33 +112,6 @@ public class Pawn extends Piece {
         }
         return false;
 
-        /*
-         * // Check if the move is forward one square or two squares on the first move
-         * if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 0)
-         * ||
-         * (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 0) ||
-         * (pieceType == PieceType.WP && rankDifference == 2 && fileDifference == 0 &&
-         * pieceRank == 2) ||
-         * (pieceType == PieceType.BP && rankDifference == 2 && fileDifference == 0 &&
-         * pieceRank == 7)) {
-         * 
-         * // Update this piece's rank and file
-         * return true;
-         * }
-         */
-        /*
-         * // Check for diagonal capture
-         * if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 1)
-         * ||
-         * (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 1)) {
-         * 
-         * // update rank and file
-         * return true;
-         * }
-         */
-
-        // Add en passant and promotion logic as needed
-
     }
 
     public boolean isMoveValidTest(int newRank, PieceFile newFile) {
@@ -156,14 +129,6 @@ public class Pawn extends Piece {
         // Update the position of the capturing piece
         targetPiece.pieceFile = takePiece.pieceFile;
         targetPiece.pieceRank = takePiece.pieceRank;
-     
-
-            for(int i = 0; i < piecesOnBoard.size(); i++){
-                if(piecesOnBoard.get(i).pieceFile.toString().charAt())
-            }
-        
-
-
     }
 
 	@Override
