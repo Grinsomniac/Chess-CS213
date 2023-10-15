@@ -84,7 +84,7 @@ public class Chess {
 		movePiece(targetPiece, destination);
 
 		//Afterstate of target piece
-		//System.out.println(targetPiece.toString());
+		System.out.println(targetPiece.toString());
 
 		// If move is completely Valid
 		switchTurn();

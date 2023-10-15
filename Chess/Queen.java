@@ -57,7 +57,7 @@ public class Queen extends Piece {
         // The move is valid for a queen and unobstructed
         return true;
     }
-
+   
     // The move is not valid for a queen
     return false;
     }

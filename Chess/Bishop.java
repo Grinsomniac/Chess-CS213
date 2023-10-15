@@ -6,20 +6,11 @@ public class Bishop extends Piece {
     public Bishop(PieceFile pieceFile, int pieceRank, boolean isWhite) {
         super(pieceFile, pieceRank, isWhite);
     }
-
     @Override
-    public PieceType getWhitePieceType() {
-        return PieceType.WB;
-    }
-
+    public PieceType getWhitePieceType() { return PieceType.WB; }
     @Override
-    public PieceType getBlackPieceType() {
-        return PieceType.BB;
-    }
-
-    public boolean getisWhite() {
-        return isWhite;
-    }
+    public PieceType getBlackPieceType() { return PieceType.BB; }
+    public boolean getisWhite() { return isWhite; }
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
@@ -57,10 +48,29 @@ public class Bishop extends Piece {
         currentFile = PieceFile.values()[currentFile.ordinal() + fileDirection];
     }
 
+    for (ReturnPiece piece : piecesOnBoard) {
+         if(piece.pieceRank == newRank && piece.pieceFile.toString().charAt(0) == newFile.toString().charAt(0)){
+                
+                    if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    return true;
+                }
+                else{
+                if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
+                                                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
     // The move is valid for a bishop and unobstructed
     return true;
     }
-    
+
     @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
         /// Remove the captured piece from the list

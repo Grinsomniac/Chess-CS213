@@ -18,9 +18,7 @@ public class Rook extends Piece {
     }
 
   
-    public boolean getisWhite() {
-        return isWhite;
-    }
+    public boolean getisWhite() { return isWhite;}
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
@@ -59,6 +57,28 @@ public class Rook extends Piece {
             for (ReturnPiece piece : piecesOnBoard) {
                 if (piece.pieceRank == rank && piece.pieceFile == pieceFile) {
                     // The move is obstructed by another piece
+                       
+                    return false;
+                       
+                }
+                
+            }
+        }
+    }
+        for(ReturnPiece piece : piecesOnBoard){
+            if(piece.pieceRank == newRank && piece.pieceFile.toString().charAt(0) == newFile.toString().charAt(0)){
+                
+                    if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    return true;
+                }
+                else{
+                if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
+                                                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        return true;
+                }
+                else{
                     return false;
                 }
             }
@@ -80,3 +100,17 @@ public class Rook extends Piece {
     }
 
 }
+
+
+//CHAT GPT VERSION
+/*
+ * public void capture(PieceFile movingFile, int movingRank, PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
+    // Remove the captured piece from the list
+    for (int i = 0; i < piecesOnBoard.size(); i++) {
+        if (piecesOnBoard.get(i).pieceFile == takeFile && piecesOnBoard.get(i).pieceRank == takeRank) {
+            piecesOnBoard.remove(i);
+            break; // Exit the loop after capturing one piece
+        }
+    }
+}
+ */
