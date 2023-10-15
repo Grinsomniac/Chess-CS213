@@ -62,6 +62,7 @@ public class Chess {
 	public static ReturnPiece targetPiece = null;
 	public static boolean playerWhite;
 	public static char promotionPiece;
+	public static boolean isDraw;
 	
 	public static ReturnPlay play(String move) {
 
@@ -87,18 +88,15 @@ public class Chess {
 		//Afterstate of target piece
 		System.out.println(targetPiece.toString());
 
+		if (isDraw){
+			returnPlay.message = ReturnPlay.Message.DRAW;
+			returnPlay.piecesOnBoard = piecesOnBoard;
+			return returnPlay;
+		}
+
 		// If move is completely Valid
 		switchTurn();
 		
-		/* //CHECK FOR DRAW - FINISH THIS
-		if (parts.length == 2) {
-			returnPlay.message = null;
-		}
-		if (parts.length == 3) {
-			returnPlay.message = ReturnPlay.Message.DRAW;
-		}
-		*/
-
 		returnPlay.piecesOnBoard = piecesOnBoard;
 		return returnPlay;
 
@@ -123,11 +121,21 @@ public class Chess {
 
 	public static void parseMove(String move) {
 		
-		move = move.trim();
+		move = move.trim().toLowerCase();
 		parts = move.split(" ");
 
-		source = parts[0];
-		destination = parts[1];
+		if (parts.length == 2 ){
+			source = parts[0];
+			destination = parts[1];
+		} else if (parts.length == 3 ){
+			source = parts[0];
+			destination = parts[1];	
+			if (parts[2].charAt(0) != 'd'){
+				promotionPiece = parts[2].charAt(0);
+			} else {
+				isDraw = true;
+			}	
+		}
 
 		searchPieces(piecesOnBoard, source);
 	}
