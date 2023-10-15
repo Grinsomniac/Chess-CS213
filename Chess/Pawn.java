@@ -63,8 +63,9 @@ public class Pawn extends Piece {
                         capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                         if (newRank == 1 && !playerWhite) {
+                            piecesOnBoard.remove(this);
                             // Perform pawn promotion to a queen (you can allow the player to choose here)
-                            Piece promotedPiece = new Queen(pieceFile, pieceRank, false);
+                            Piece promotedPiece = new Queen(newFile, newRank, false);
                             piecesOnBoard.add(promotedPiece);
                         }
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
@@ -76,8 +77,9 @@ public class Pawn extends Piece {
                      capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                      //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                      if (newRank == 8 && playerWhite) {
+                        piecesOnBoard.remove(this);
                         // Perform pawn promotion to a queen (you can allow the player to choose here)
-                        Piece promotedPiece = new Queen(pieceFile, pieceRank, true);
+                        Piece promotedPiece = new Queen(newFile, newRank, true);
                         piecesOnBoard.add(promotedPiece);
                     }
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
