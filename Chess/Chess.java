@@ -80,7 +80,7 @@ public class Chess {
 			returnPlay.piecesOnBoard = piecesOnBoard;
 			return returnPlay;
 		}
-
+		returnPlay.message = null;
 		movePiece(targetPiece, destination);
 
 		//Afterstate of target piece

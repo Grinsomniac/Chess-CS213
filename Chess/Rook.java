@@ -108,10 +108,16 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+    public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'capture'");
     }
+
+
+    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite){      //DELETE LATER
+        return true;
+    }
+
 }
 
 /* 

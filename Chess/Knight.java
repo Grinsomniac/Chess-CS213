@@ -77,10 +77,14 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+    public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
       
             
 
+    }
+
+    public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite){
+        return true;
     }
 
 }

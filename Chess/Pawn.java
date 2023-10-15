@@ -1,7 +1,7 @@
 package chess;
 
 import java.util.*;
-import chess.*;
+
 public class Pawn extends Piece {
     public Pawn(PieceFile pieceFile, int pieceRank, boolean isWhite) {
         super(pieceFile, pieceRank, isWhite);
@@ -49,13 +49,7 @@ public class Pawn extends Piece {
         for (ReturnPiece piece : piecesOnBoard) {
             if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
                 // The move is obstructed by another piece
-                if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){    //maybe doesnt work
-                                                                                    //implement way to call capture method
-                     
-                    
-                }
-                
-                //return false;
+                return false;
             }
         }
         return true;
@@ -74,11 +68,26 @@ public class Pawn extends Piece {
         for (ReturnPiece piece : piecesOnBoard) {
             if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
                 // The move is valid for capturing an opponent's piece
-                return true;
+                if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){    //maybe doesnt work
+                                                                                    //implement way to call capture method
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    return true;
+                }
+                else{
+                if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
+                                                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        return true;
+                }
+                else{
+                    return false;
+                }
+            }
+                
             }
         }
     }
-
+   
     // The move is not valid for a pawn
     return false;
     }
@@ -121,20 +130,31 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard) {
+    public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
 
         // Remove the captured piece from the list
-        piecesOnBoard.remove(takePiece);
+        for(int i = 0; i < piecesOnBoard.size(); i++){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
+                 piecesOnBoard.remove(i);
+            }
+        }
+      
+        
 
         // Update the position of the capturing piece
-        targetPiece.pieceFile = takePiece.pieceFile;
-        targetPiece.pieceRank = takePiece.pieceRank;
+        //targetPiece.pieceFile = takePiece.pieceFile;
+        //targetPiece.pieceRank = takePiece.pieceRank;
     }
 
+        public boolean isMoveValid(int a, ReturnPiece.PieceFile b, ArrayList<ReturnPiece> c){   // delete later
+            return true;
+        }
+
+/* 
 	@Override
 	public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
 	}
-
+*/
 }

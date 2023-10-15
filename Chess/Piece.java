@@ -31,13 +31,13 @@ public abstract class Piece extends ReturnPiece {
 
     public abstract void executeMove(int newRank, PieceFile newFile);
 
-    public abstract void capture(ReturnPiece targetPiece, ReturnPiece takePiece, ArrayList<ReturnPiece> piecesOnBoard);
+    public abstract void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard);
 
-
+    public abstract boolean isMoveValid(int a, ReturnPiece.PieceFile b, ArrayList<ReturnPiece> c);
 
 }
 
-// public abstract boolean isMoveValid(int newRank, PieceFile newFile);
+ //public abstract boolean isMoveValid(int newRank, PieceFile newFile);
 
 /*
  * // Common method for moving a piece
