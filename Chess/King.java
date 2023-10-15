@@ -30,8 +30,18 @@ public class King extends Piece {
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
-        // TODO
+        // Calculate the absolute differences between ranks and files
+    int rankDifference = Math.abs(newRank - pieceRank);
+    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+
+    // Kings can move one square in any direction
+    if (rankDifference <= 1 && fileDifference <= 1) {
+        // The move is valid for a king
         return true;
+    }
+
+    // The move is not valid for a king
+    return false;
     }
 
     public boolean isMoveValid(int newRank, PieceFile newFile) {

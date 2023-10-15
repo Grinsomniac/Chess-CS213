@@ -30,8 +30,18 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
-        // TODO
+        // Calculate the absolute differences between ranks and files
+    int rankDifference = Math.abs(newRank - pieceRank);
+    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+
+    // Knights move in an L-shape: two squares in one direction and one square in a perpendicular direction
+    if ((rankDifference == 2 && fileDifference == 1) || (rankDifference == 1 && fileDifference == 2)) {
+        // The move is valid for a knight
         return true;
+    }
+
+    // The move is not valid for a knight
+    return false;
     }
 
     public boolean isMoveValid(int newRank, PieceFile newFile) {

@@ -23,8 +23,52 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isMoveValid'");
+        // Check if the new rank and new file are the same as the current rank and file
+    if (newRank == pieceRank && newFile == pieceFile) {
+        // The pawn hasn't moved, which is not a valid move
+        return false;
+    }
+
+    // Calculate the absolute differences between ranks and files
+    int rankDifference = Math.abs(newRank - pieceRank);
+    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+
+    // Determine the direction of movement
+    int rankDirection = Integer.compare(newRank, pieceRank);
+    int fileDirection = Integer.compare(newFile.ordinal(), pieceFile.ordinal());
+
+    // Pawns move differently on their initial and subsequent moves
+    if (rankDifference == 1 && fileDifference == 0) {
+        // Subsequent move: one square forward
+        for (ReturnPiece piece : piecesOnBoard) {
+            if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
+                // The move is obstructed by another piece
+                return false;
+            }
+        }
+        return true;
+    } else if (rankDifference == 2 && fileDifference == 0 && pieceRank == 2 && fileDirection == 0) {
+        // Initial move: two squares forward from the second rank
+        int intermediateRank = pieceRank + rankDirection;
+        for (ReturnPiece piece : piecesOnBoard) {
+            if ((piece.pieceRank == intermediateRank && piece.pieceFile == pieceFile) || (piece.pieceRank == newRank && piece.pieceFile == newFile)) {
+                // The move is obstructed by another piece
+                return false;
+            }
+        }
+        return true;
+    } else if (rankDifference == 1 && fileDifference == 1 && pieceFile.ordinal() + fileDirection == newFile.ordinal()) {
+        // Capturing a piece diagonally
+        for (ReturnPiece piece : piecesOnBoard) {
+            if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
+                // The move is valid for capturing an opponent's piece
+                return true;
+            }
+        }
+    }
+    
+    // The move is not valid for a pawn
+    return false;
     }
 
     @Override

@@ -152,73 +152,6 @@ public class Chess {
 		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
 		targetPiece.pieceRank = targetRank;
 		
-		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
-			Pawn castedPawnPiece = (Pawn) targetPiece;
-			System.out.println("casted piece file:" + castedPawnPiece.toString());
-			System.out.println("casted Piece color" + castedPawnPiece.getisWhite());// TESTING
-			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-		if (targetPiece.pieceType.toString().charAt(1) == 'N') {
-			Knight castedKnightPiece = (Knight) targetPiece;
-			System.out.println("casted piece file:" + castedKnightPiece.toString());
-			System.out.println("casted Piece color" + castedKnightPiece.getisWhite());// TESTING
-			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-		if (targetPiece.pieceType.toString().charAt(1) == 'B') {
-			Bishop castedBishopPiece = (Bishop) targetPiece;
-			System.out.println("casted piece file:" + castedBishopPiece.toString());
-			System.out.println("casted Piece color" + castedBishopPiece.getisWhite());// TESTING
-			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-		if (targetPiece.pieceType.toString().charAt(1) == 'R') {
-			Rook castedRookPiece = (Rook) targetPiece;
-			System.out.println("casted piece file:" + castedRookPiece.toString());
-			System.out.println("casted Piece color" + castedRookPiece.getisWhite());// TESTING
-			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-		if (targetPiece.pieceType.toString().charAt(1) == 'Q') {
-			Queen castedQueenPiece = (Queen) targetPiece;
-			System.out.println("casted piece file:" + castedQueenPiece.toString());
-			System.out.println("casted Piece color" + castedQueenPiece.getisWhite());// TESTING
-			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-		if (targetPiece.pieceType.toString().charAt(1) == 'K') {
-			King castedKingPiece = (King) targetPiece;
-			System.out.println("casted piece file:" + castedKingPiece.toString());
-			System.out.println("casted Piece color" + castedKingPiece.getisWhite());// TESTING
-			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-				targetPiece.pieceRank = targetRank;
-			} else {
-				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}
-		}
-
 		// Update file and rank for targetPiece
 
 	}
@@ -236,30 +169,78 @@ public class Chess {
 	public static Boolean validateMove(ReturnPiece targetPiece) {
 
 
-				char targetFile = destination.charAt(0);
+		char targetFile = destination.charAt(0);
 		int targetRank = (destination.charAt(1) - 48);
+		boolean colorCheck = false;
 
 		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)){
-			return true;
+			colorCheck = true;
 		} else {
 			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black))
-			return true;
+			colorCheck = true;
 		}
-		
-		return false;	
-		
-		/*
-	    Pawn castedPiece = (Pawn) targetPiece;
-		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)
-				&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
-			return true;
-		} else {
-			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black)
-					&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+
+		if(!colorCheck){
+			return false;
+		}
+
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
+			Pawn castedPawnPiece = (Pawn) targetPiece;
+			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
 				return true;
-			}		
+			} else {
+				return false;
+			}
 		}
-		*/		
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'R') {
+			Rook castedRookPiece = (Rook) targetPiece;
+			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'B') {
+			Bishop castedBishopPiece = (Bishop) targetPiece;
+			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'N') {
+			Knight castedKnightPiece = (Knight) targetPiece;
+			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'Q') {
+			Queen castedQueenPiece = (Queen) targetPiece;
+			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'K') {
+			King castedKingPiece = (King) targetPiece;
+			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
+			
 		
 	}
 
