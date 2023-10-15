@@ -32,7 +32,7 @@ class ReturnPiece {
 	}
 }
 
-///////////////////////     NO CHANGES     /////////////////////////////////
+/////////////////////// NO CHANGES /////////////////////////////////
 class ReturnPlay {
 	enum Message {
 		ILLEGAL_MOVE, DRAW,
@@ -45,12 +45,14 @@ class ReturnPlay {
 	Message message;
 }
 
-///////////////////////   ADD TO CHESS CLASS ONLY    ///////////////////////
+/////////////////////// ADD TO CHESS CLASS ONLY ///////////////////////
 public class Chess {
 
-	enum Player { white, black} // No Touch
-    
-	public static Player currentPlayer; 
+	enum Player {
+		white, black
+	} // No Touch
+
+	public static Player currentPlayer;
 	public static String whitePrompt = "\nWhite's Move: ";
 	public static String blackPrompt = "\nBlack's Move: ";
 	public static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
@@ -59,12 +61,11 @@ public class Chess {
 	public static String[] parts;
 	public static String source;
 	public static String destination;
-
 	public static ReturnPiece targetPiece = null;
-
 
 	/**
 	 * Plays the next move for whichever player has the turn.
+	 * 
 	 * @param move String for next move, e.g. "a2 a3"
 	 * @return A ReturnPlay instance that contains the result of the move.
 	 *         See the section "The Chess class" in the assignment description for
@@ -73,43 +74,42 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
-		System.out.println("Current Player(play1) : " + currentPlayer.toString());//TESTING
+		System.out.println("Current Player(play1) : " + currentPlayer.toString());// TESTING
 
-		//Testing - Visibility for currentPlayer turn
-		if (resignCheck(move)){
+		// Testing - Visibility for currentPlayer turn
+		if (resignCheck(move)) {
 			return returnPlay;
-		} 
+		}
 		parseMove(move);
 
-		//Validates correct players piece is moved
-		if (!validatePlayerPiece(targetPiece)){
-			//ReturnPlay Object with Invalid turn message
+		// Validates correct players piece is moved
+		if (!validateMove(targetPiece)) {
+			// ReturnPlay Object with Invalid turn message
 			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			returnPlay.piecesOnBoard = piecesOnBoard;
-			return returnPlay;	
+			return returnPlay;
 		}
 
 		movePiece(targetPiece, destination);
-	
-		//Afterstate of target piece
-		System.out.println(targetPiece.toString());
-        
-	    //If move is completely Valid
-		switchTurn();
-		System.out.println("Current Player(play2): " + currentPlayer.toString());//TESTING
 
-		
-		if(parts.length == 2){
+		// Afterstate of target piece
+		System.out.println(targetPiece.toString());
+
+		// If move is completely Valid
+		switchTurn();
+		System.out.println("Current Player(play2): " + currentPlayer.toString());// TESTING
+
+		if (parts.length == 2) {
 			returnPlay.message = null;
 		}
-		if(parts.length == 3){
+		if (parts.length == 3) {
 			returnPlay.message = ReturnPlay.Message.DRAW;
 		}
 		returnPlay.piecesOnBoard = piecesOnBoard;
-        return returnPlay; 
+		return returnPlay;
 
 	}
-	
+
 	public static Boolean resignCheck(String move) {
 
 		// Checking for Resign message
@@ -141,71 +141,140 @@ public class Chess {
 
 		searchPieces(piecesOnBoard, source);
 	}
-	
-		
+
 	public static void movePiece(ReturnPiece targetPiece, String destination) {
 
 		char targetFile = destination.charAt(0);
-		int targetRank = (destination.charAt(1)-48);
+		int targetRank = (destination.charAt(1) - 48);
 
-		//Update file and rank for targetPiece
-		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
-		targetPiece.pieceRank = targetRank;
+		// if(targetPiece.PieceType.toString().charAt(1))
+
+		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
+			Pawn castedPawnPiece = (Pawn) targetPiece;
+			System.out.println("casted piece file:" + castedPawnPiece.toString());
+			System.out.println("casted Piece color" + castedPawnPiece.getisWhite());// TESTING
+			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+		if (targetPiece.pieceType.toString().charAt(1) == 'N') {
+			Knight castedKnightPiece = (Knight) targetPiece;
+			System.out.println("casted piece file:" + castedKnightPiece.toString());
+			System.out.println("casted Piece color" + castedKnightPiece.getisWhite());// TESTING
+			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+		if (targetPiece.pieceType.toString().charAt(1) == 'B') {
+			Bishop castedBishopPiece = (Bishop) targetPiece;
+			System.out.println("casted piece file:" + castedBishopPiece.toString());
+			System.out.println("casted Piece color" + castedBishopPiece.getisWhite());// TESTING
+			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+		if (targetPiece.pieceType.toString().charAt(1) == 'R') {
+			Rook castedRookPiece = (Rook) targetPiece;
+			System.out.println("casted piece file:" + castedRookPiece.toString());
+			System.out.println("casted Piece color" + castedRookPiece.getisWhite());// TESTING
+			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+		if (targetPiece.pieceType.toString().charAt(1) == 'Q') {
+			Queen castedQueenPiece = (Queen) targetPiece;
+			System.out.println("casted piece file:" + castedQueenPiece.toString());
+			System.out.println("casted Piece color" + castedQueenPiece.getisWhite());// TESTING
+			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+		if (targetPiece.pieceType.toString().charAt(1) == 'K') {
+			King castedKingPiece = (King) targetPiece;
+			System.out.println("casted piece file:" + castedKingPiece.toString());
+			System.out.println("casted Piece color" + castedKingPiece.getisWhite());// TESTING
+			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
+				targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
+				targetPiece.pieceRank = targetRank;
+			} else {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}
+		}
+
+		// Update file and rank for targetPiece
+
 	}
 
-	//Toggle for player turn. 
-	public static void switchTurn(){
-		if (currentPlayer == Player.white){
+	// Toggle for player turn.
+	public static void switchTurn() {
+		if (currentPlayer == Player.white) {
 			currentPlayer = Player.black;
-		}
-		else{
-		currentPlayer = Player.white;
+		} else {
+			currentPlayer = Player.white;
 		}
 
 	}
-	
 
-	public static Boolean validatePlayerPiece(ReturnPiece targetPiece){
+	public static Boolean validateMove(ReturnPiece targetPiece) {
 
-		if(targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white){
+		char targetFile = destination.charAt(0);
+		int targetRank = (destination.charAt(1) - 48);
+		Pawn castedPiece = (Pawn) targetPiece;
+		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)
+				&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
 			return true;
-		}
-		else{
-			if(targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black){
+		} else {
+			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black)
+					&& castedPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)))) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	//Searches ArrayList<ReturnPiece> for targetPiece
-	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source){
+	// Searches ArrayList<ReturnPiece> for targetPiece
+	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source) {
 
 		char targetFile = source.charAt(0);
-		int targetRank = (source.charAt(1)-48);
+		int targetRank = (source.charAt(1) - 48);
 
 		// Iterate through the ArrayList to find the Piece
 		for (ReturnPiece piece : piecesOnBoard) {
-    		if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
-        	// Found the Piece with the matching File and Rank
-        		targetPiece = piece;
-        	break;  // Exit the loop once the Piece is found
-    		}
+			if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
+				// Found the Piece with the matching File and Rank
+				targetPiece = piece;
+				break; // Exit the loop once the Piece is found
+			}
 		}
-		//TESTING FOR PIECE FINDING VISIBILITY 
+		// TESTING FOR PIECE FINDING VISIBILITY
 		if (targetPiece != null) {
-    		System.out.println("Found piece: " + targetPiece);
+			System.out.println("Found piece: " + targetPiece);
 		} else {
-   			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
+			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
 		}
 	}
 
-	//reset the game, and start from scratch. - DONE
+	// reset the game, and start from scratch. - DONE
 	public static void start() {
-		InitializeBoard(); 
+		InitializeBoard();
 		currentPlayer = Player.white;
-		moveCount = 0; 
-		System.out.print(whitePrompt); 
+		moveCount = 0;
+		System.out.print(whitePrompt);
 	}
 
 	// Creates Pieces and draws starting board. - DONE
@@ -239,13 +308,13 @@ public class Chess {
 			piecesOnBoard.add(new Pawn(file, 7, false));
 		}
 
-		/* 
-		 //Testing - To validate that all pieces were created
-		 for (ReturnPiece piece : piecesOnBoard) {
-		 	System.out.println(piece.toString());
-		 }
+		/*
+		 * //Testing - To validate that all pieces were created
+		 * for (ReturnPiece piece : piecesOnBoard) {
+		 * System.out.println(piece.toString());
+		 * }
 		 */
-		 
+
 		PlayChess.printBoard(piecesOnBoard);
 	}
 }

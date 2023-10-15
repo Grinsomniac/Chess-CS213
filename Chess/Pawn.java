@@ -16,14 +16,8 @@ public class Pawn extends Piece {
     public PieceType getBlackPieceType() {
         return PieceType.BP;
     }
-    
-    /* 
-    public PieceColor getColor() {
-        return (pieceType == PieceType.WR || pieceType == PieceType.WP) ? PieceColor.white : PieceColor.black;
-    }
-    */
 
-    public boolean getisWhite(){
+    public boolean getisWhite() {
         return isWhite;
     }
 
@@ -44,31 +38,57 @@ public class Pawn extends Piece {
 
     }
 
-    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile) {
-        int rankDifference = Math.abs(newRank - pieceRank);
-        int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-
-        // Check if the move is forward one square or two squares on the first move
-        if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 0) ||
-                (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 0) ||
-                (pieceType == PieceType.WP && rankDifference == 2 && fileDifference == 0 && pieceRank == 2) ||
-                (pieceType == PieceType.BP && rankDifference == 2 && fileDifference == 0 && pieceRank == 7)) {
-
-            // Update this piece's rank and file
-            return true;
+    public boolean isMoveValid(int newRank, PieceFile newFile) {
+        if (isWhite) {
+            int rankDifference = (newRank - pieceRank);
+            int fileDifference = (newFile.ordinal() - pieceFile.ordinal());
+            if ((rankDifference == 1 && fileDifference == 0)
+                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 2)) {
+                return true;
+            }
+        } else {
+            int rankDifference = (pieceRank - newRank);
+            int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+            if ((rankDifference == 1 && fileDifference == 0)
+                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 7)) {
+                return true;
+            }
         }
+        return false;
 
-        // Check for diagonal capture
-        if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 1) ||
-                (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 1)) {
-
-            // update rank and file
-            return true;
-        }
+        /*
+         * // Check if the move is forward one square or two squares on the first move
+         * if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 0)
+         * ||
+         * (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 0) ||
+         * (pieceType == PieceType.WP && rankDifference == 2 && fileDifference == 0 &&
+         * pieceRank == 2) ||
+         * (pieceType == PieceType.BP && rankDifference == 2 && fileDifference == 0 &&
+         * pieceRank == 7)) {
+         * 
+         * // Update this piece's rank and file
+         * return true;
+         * }
+         */
+        /*
+         * // Check for diagonal capture
+         * if ((pieceType == PieceType.WP && rankDifference == 1 && fileDifference == 1)
+         * ||
+         * (pieceType == PieceType.BP && rankDifference == 1 && fileDifference == 1)) {
+         * 
+         * // update rank and file
+         * return true;
+         * }
+         */
 
         // Add en passant and promotion logic as needed
 
-        return false; // Invalid move
+    }
+
+    public boolean isMoveValidTest(int newRank, PieceFile newFile) {
+        System.out.println("In isMoveValidTest");
+
+        return true;
     }
 
 }
