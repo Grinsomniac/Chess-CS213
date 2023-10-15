@@ -22,7 +22,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
+    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
         // Calculate the absolute differences between ranks and files
     int rankDifference = Math.abs(newRank - pieceRank);
     int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());

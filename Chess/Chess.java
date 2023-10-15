@@ -61,6 +61,7 @@ public class Chess {
 	public static String destination;
 	public static ReturnPiece targetPiece = null;
 	public static boolean playerWhite;
+	public static char promotionPiece;
 	
 	public static ReturnPlay play(String move) {
 
@@ -173,7 +174,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
 			Pawn castedPawnPiece = (Pawn) targetPiece;
-			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -182,7 +183,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'R') {
 			Rook castedRookPiece = (Rook) targetPiece;
-			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -191,7 +192,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'B') {
 			Bishop castedBishopPiece = (Bishop) targetPiece;
-			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -200,7 +201,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'N') {
 			Knight castedKnightPiece = (Knight) targetPiece;
-			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -209,7 +210,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'Q') {
 			Queen castedQueenPiece = (Queen) targetPiece;
-			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -218,7 +219,7 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'K') {
 			King castedKingPiece = (King) targetPiece;
-			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite)) {
+			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;

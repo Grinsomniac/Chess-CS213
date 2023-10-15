@@ -21,7 +21,7 @@ public class Rook extends Piece {
     public boolean getisWhite() { return isWhite;}
 
     @Override
-    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite) {
+    public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
        // Check if the new rank and new file are the same as the current rank and file
     if (newRank == pieceRank && newFile == pieceFile) {
         // The rook hasn't moved, which is not a valid move
