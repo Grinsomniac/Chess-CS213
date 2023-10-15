@@ -88,30 +88,5 @@ public class Rook extends Piece {
     // The move is valid for a rook and unobstructed
     return true;
     }
-
-    /*
-    @Override
-    public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
-        // Remove the captured piece from the list
-        for(int i = 0; i < piecesOnBoard.size(); i++){
-            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
-                 piecesOnBoard.remove(i);
-            }
-        }
-    }
-    */
 }
 
-
-//CHAT GPT VERSION
-/*
- * public void capture(PieceFile movingFile, int movingRank, PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
-    // Remove the captured piece from the list
-    for (int i = 0; i < piecesOnBoard.size(); i++) {
-        if (piecesOnBoard.get(i).pieceFile == takeFile && piecesOnBoard.get(i).pieceRank == takeRank) {
-            piecesOnBoard.remove(i);
-            break; // Exit the loop after capturing one piece
-        }
-    }
-}
- */
