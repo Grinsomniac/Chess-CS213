@@ -61,12 +61,26 @@ public class Pawn extends Piece {
                     // The move is valid for capturing an opponent's piece
                     if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
                         capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        //New Code for Pawn Promo//////////////////////////////////////////////////////////////
+                        if (newRank == 1 && !playerWhite) {
+                            // Perform pawn promotion to a queen (you can allow the player to choose here)
+                            Piece promotedPiece = new Queen(pieceFile, pieceRank, false);
+                            piecesOnBoard.add(promotedPiece);
+                        }
+                        //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                         return true;
                     }
                     else { 
                         if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
                                                                                    
                      capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                     //New Code for Pawn Promo//////////////////////////////////////////////////////////////
+                     if (newRank == 8 && playerWhite) {
+                        // Perform pawn promotion to a queen (you can allow the player to choose here)
+                        Piece promotedPiece = new Queen(pieceFile, pieceRank, true);
+                        piecesOnBoard.add(promotedPiece);
+                    }
+                        //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                         return true;
                     }
                     else {
