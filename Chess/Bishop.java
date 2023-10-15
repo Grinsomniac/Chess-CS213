@@ -36,22 +36,23 @@ public class Bishop extends Piece {
     }
 
     public boolean isMoveValid(int newRank, PieceFile newFile) {
-        if (isWhite) {
-            int rankDifference = (newRank - pieceRank);
-            int fileDifference = (newFile.ordinal() - pieceFile.ordinal());
-            if ((rankDifference == 1 && fileDifference == 0)
-                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 2)) {
-                return true;
-            }
-        } else {
-            int rankDifference = (pieceRank - newRank);
-            int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
-            if ((rankDifference == 1 && fileDifference == 0)
-                    || (rankDifference == 2 && fileDifference == 0 && pieceRank == 7)) {
-                return true;
-            }
-        }
+        // Check if the new rank and new file are the same as the current rank and file
+    if (newRank == pieceRank && newFile == pieceFile) {
+        // The bishop hasn't moved, which is not a valid move
         return false;
+    }
+
+    // Check if the absolute difference between ranks and files is the same
+    int rankDifference = Math.abs(newRank - pieceRank);
+    int fileDifference = Math.abs(newFile.ordinal() - pieceFile.ordinal());
+
+    if (rankDifference == fileDifference) {
+        // The move is diagonal, which is valid for a bishop
+        return true;
+    }
+
+    // The move is not valid for a bishop
+    return false;
     }
 
     @Override
