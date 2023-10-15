@@ -25,7 +25,14 @@ public abstract class Piece extends ReturnPiece {
 
     public abstract boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite);
 
-    public abstract void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard);
+    public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard){
+        /// Remove the captured piece from the list
+        for(int i = 0; i < piecesOnBoard.size(); i++){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank){
+                 piecesOnBoard.remove(i);
+            }
+        }
+    }
 
 }
 

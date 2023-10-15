@@ -71,6 +71,7 @@ public class Bishop extends Piece {
     return true;
     }
 
+    /* 
     @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
         /// Remove the captured piece from the list
@@ -80,4 +81,5 @@ public class Bishop extends Piece {
             }
         }
     }
+    */
 }

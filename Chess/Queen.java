@@ -83,6 +83,7 @@ public class Queen extends Piece {
     return false;
     }
 
+    /*
     @Override
     public void capture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard) {
         // Remove the captured piece from the list
@@ -92,5 +93,5 @@ public class Queen extends Piece {
             }
         }
     }
-
+    */
 }
