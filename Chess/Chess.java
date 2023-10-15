@@ -61,7 +61,7 @@ public class Chess {
 	public static String destination;
 	public static ReturnPiece targetPiece = null;
 	public static boolean playerWhite;
-	public static char promotionPiece;
+	public static char promotionPiece = ' ';
 	public static boolean isDraw;
 	
 	public static ReturnPlay play(String move) {
@@ -84,6 +84,8 @@ public class Chess {
 		}
 		returnPlay.message = null;
 		movePiece(targetPiece, destination);
+		
+		promotionPiece = ' ';
 
 		//Afterstate of target piece
 		System.out.println(targetPiece.toString());

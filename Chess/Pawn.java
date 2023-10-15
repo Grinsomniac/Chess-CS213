@@ -64,8 +64,29 @@ public class Pawn extends Piece {
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                         if (newRank == 1 && !playerWhite) {
                             piecesOnBoard.remove(this);
-                            // Perform pawn promotion to a queen (you can allow the player to choose here)
-                            Piece promotedPiece = new Queen(newFile, newRank, false);
+                            Piece promotedPiece;
+    
+                            switch (promotionPiece) {
+                                case 'b':
+                                    promotedPiece = new Bishop(newFile, newRank, false);
+                                    break;
+                                case 'n':
+                                    promotedPiece = new Knight(newFile, newRank, false);
+                                    break;
+                                case 'r':
+                                    promotedPiece = new Rook(newFile, newRank, false);
+                                    break;
+                                case 'q':
+                                    promotedPiece = new Queen(newFile, newRank, false);
+                                    break;
+                                case ' ':
+                                    promotedPiece = new Queen(newFile, newRank, false);
+                                    break;
+                                default:
+                                    // Handle any other case here, or use a default piece (e.g., Queen) if not specified
+                                    promotedPiece = new Queen(newFile, newRank, false);
+                                    break;
+                            }
                             piecesOnBoard.add(promotedPiece);
                         }
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
@@ -78,8 +99,28 @@ public class Pawn extends Piece {
                      //New Code for Pawn Promo//////////////////////////////////////////////////////////////
                      if (newRank == 8 && playerWhite) {
                         piecesOnBoard.remove(this);
-                        // Perform pawn promotion to a queen (you can allow the player to choose here)
-                        Piece promotedPiece = new Queen(newFile, newRank, true);
+                        Piece promotedPiece;
+    
+                        switch (promotionPiece) {
+                            case 'b':
+                                promotedPiece = new Bishop(newFile, newRank, true);
+                                break;
+                            case 'n':
+                                promotedPiece = new Knight(newFile, newRank, true);
+                                break;
+                            case 'r':
+                                promotedPiece = new Rook(newFile, newRank, true);
+                                break;
+                            case 'q':
+                                promotedPiece = new Queen(newFile, newRank, true);
+                                break;
+                            case ' ':
+                                promotedPiece = new Queen(newFile, newRank, true);
+                                break;
+                            default:
+                                promotedPiece = new Queen(newFile, newRank, true);
+                                break;
+                        }
                         piecesOnBoard.add(promotedPiece);
                     }
                         //New Code for Pawn Promo//////////////////////////////////////////////////////////////
