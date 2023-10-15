@@ -30,6 +30,26 @@ public class Knight extends Piece {
     // Knights move in an L-shape: two squares in one direction and one square in a perpendicular direction
     if ((rankDifference == 2 && fileDifference == 1) || (rankDifference == 1 && fileDifference == 2)) {
         // The move is valid for a knight
+        for(ReturnPiece piece : piecesOnBoard){
+            if(piece.pieceRank == newRank && piece.pieceFile.toString().charAt(0) == newFile.toString().charAt(0)){
+                
+                    if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    return true;
+                }
+                else{
+                if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
+                                                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
         return true;
     }
 
@@ -37,6 +57,4 @@ public class Knight extends Piece {
     return false;
     }
 
-
-    
 }
