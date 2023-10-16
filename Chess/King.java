@@ -70,6 +70,13 @@ public class King extends Piece {
                     }
                 }
             }
+            /*
+             * 1. Loop through arrayList of pieces. 
+             * 2. Call each is moveValid(KingPieceRank and KingPieceFile) 
+             * isMoveValid() for each piece should return false, if not, return KING IN CHECK returnPlay Message. 
+             * 
+             * 
+             */
         
             // The king is not in check
             return false;

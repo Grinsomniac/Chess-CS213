@@ -85,8 +85,6 @@ public class Chess {
 		returnPlay.message = null;
 		movePiece(targetPiece, destination);
 		
-		promotionPiece = ' ';
-
 		//Afterstate of target piece
 		System.out.println(targetPiece.toString());
 
@@ -95,6 +93,9 @@ public class Chess {
 			returnPlay.piecesOnBoard = piecesOnBoard;
 			return returnPlay;
 		}
+
+		////////////////////////////////////// KING CHECK RETURN PLAY ////////////////////////////////////////////
+		
 
 		// If move is completely Valid
 		switchTurn();
@@ -181,7 +182,6 @@ public class Chess {
 		if(!colorCheck){
 			return false;
 		}
-
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
 			Pawn castedPawnPiece = (Pawn) targetPiece;
