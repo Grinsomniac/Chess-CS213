@@ -11,6 +11,10 @@ public class Bishop extends Piece {
     @Override
     public PieceType getBlackPieceType() { return PieceType.BB; }
     public boolean getisWhite() { return isWhite; }
+    @Override
+    public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
+    @Override
+    public int getPieceRank() { return pieceRank; }
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {

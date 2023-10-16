@@ -10,7 +10,13 @@ public class Pawn extends Piece {
     public PieceType getWhitePieceType() { return PieceType.WP; }
     @Override
     public PieceType getBlackPieceType() { return PieceType.BP; }
+    @Override
     public boolean getisWhite() { return isWhite; }
+     @Override
+    public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
+    @Override
+    public int getPieceRank() { return pieceRank; }
+
 
     @Override
     public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
@@ -111,4 +117,7 @@ public class Pawn extends Piece {
             piecesOnBoard.add(promotedPiece);
         }
     }
+
+   
+
 }

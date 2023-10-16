@@ -21,6 +21,11 @@ public abstract class Piece extends ReturnPiece {
 
     public abstract PieceType getBlackPieceType();
 
+    public abstract PieceFile getPieceFile();
+
+    public abstract int getPieceRank();
+
+
     public abstract boolean getisWhite();
 
     public abstract boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece);

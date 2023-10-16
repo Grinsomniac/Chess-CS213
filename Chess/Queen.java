@@ -9,18 +9,14 @@ public class Queen extends Piece {
     }
 
     @Override
-    public PieceType getWhitePieceType() {
-        return PieceType.WQ;
-    }
-
+    public PieceType getWhitePieceType() {return PieceType.WQ; }
     @Override
-    public PieceType getBlackPieceType() {
-        return PieceType.BQ;
-    }
-
-    public boolean getisWhite() {
-        return isWhite;
-    }
+    public PieceType getBlackPieceType() {return PieceType.BQ;}
+    public boolean getisWhite() { return isWhite; }
+    @Override
+    public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
+    @Override
+    public int getPieceRank() { return pieceRank; }
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {

@@ -99,6 +99,7 @@ public class Chess {
 		// If move is completely Valid
 		switchTurn();
 		
+		
 		returnPlay.piecesOnBoard = piecesOnBoard;
 		return returnPlay;
 

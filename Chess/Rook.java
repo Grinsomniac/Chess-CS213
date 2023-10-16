@@ -8,17 +8,14 @@ public class Rook extends Piece {
     }
 
     @Override
-    public PieceType getWhitePieceType() {
-        return PieceType.WR;
-    }
-
+    public PieceType getWhitePieceType() { return PieceType.WN; }
     @Override
-    public PieceType getBlackPieceType() {
-        return PieceType.BR;
-    }
-
-  
+    public PieceType getBlackPieceType() { return PieceType.BN; }
     public boolean getisWhite() { return isWhite;}
+    @Override
+    public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
+    @Override
+    public int getPieceRank() { return pieceRank; }
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {

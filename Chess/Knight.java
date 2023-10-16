@@ -8,18 +8,14 @@ public class Knight extends Piece {
     }
 
     @Override
-    public PieceType getWhitePieceType() {
-        return PieceType.WN;
-    }
-
+    public PieceType getWhitePieceType() { return PieceType.WN; }
     @Override
-    public PieceType getBlackPieceType() {
-        return PieceType.BN;
-    }
-
-    public boolean getisWhite() {
-        return isWhite;
-    }
+    public PieceType getBlackPieceType() { return PieceType.BN; }
+    public boolean getisWhite() { return isWhite;}
+    @Override
+    public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
+    @Override
+    public int getPieceRank() { return pieceRank; }
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
@@ -49,7 +45,6 @@ public class Knight extends Piece {
             }
         }
     }
-
         return true;
     }
 
