@@ -54,7 +54,7 @@ public class King extends Piece {
         return false;
         }
 
-        public boolean isKingInCheck(ArrayList<ReturnPiece> piecesOnBoard) {
+        public boolean isKingInCheck(ArrayList<ReturnPiece> piecesOnBoard, ReturnPiece square) {
       
                             int piecesChecking = 0;
                             for(ReturnPiece piece : piecesOnBoard){
@@ -62,7 +62,7 @@ public class King extends Piece {
                                 if (piece.pieceType.toString().charAt(1) == 'P') {
                                     Pawn castedPawnPiece = (Pawn) piece;
 
-                                    if(castedPawnPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedPawnPiece.isWhite, ' ')){
+                                    if(castedPawnPiece.isMoveValid(square.pieceRank, square.pieceFile, piecesOnBoard, castedPawnPiece.isWhite, ' ')){
                                         System.out.println("check from pawn" + castedPawnPiece.pieceFile.toString() + "" + castedPawnPiece.pieceRank);
                                         piecesChecking++;
                                     }
@@ -71,7 +71,7 @@ public class King extends Piece {
                              if (piece.pieceType.toString().charAt(1) == 'Q') {
                                     Queen castedQueenPiece = (Queen) piece;
 
-                                    if(castedQueenPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedQueenPiece.isWhite, ' ')){
+                                    if(castedQueenPiece.isMoveValid(square.pieceRank, square.pieceFile, piecesOnBoard, castedQueenPiece.isWhite, ' ')){
                                         System.out.println("check from queen" + castedQueenPiece.pieceFile.toString() + "" + castedQueenPiece.pieceRank);
                                         piecesChecking++;
                                     }
@@ -80,7 +80,7 @@ public class King extends Piece {
                              if (piece.pieceType.toString().charAt(1) == 'B') {
                                     Bishop castedBishopPiece = (Bishop) piece;
 
-                                    if(castedBishopPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedBishopPiece.isWhite, ' ')){
+                                    if(castedBishopPiece.isMoveValid(square.pieceRank, square.pieceFile, piecesOnBoard, castedBishopPiece.isWhite, ' ')){
                                         System.out.println("check from bishop" + castedBishopPiece.pieceFile.toString() + "" + castedBishopPiece.pieceRank);
                                         piecesChecking++;
 
@@ -91,7 +91,7 @@ public class King extends Piece {
                              if (piece.pieceType.toString().charAt(1) == 'R') {
                                     Rook castedRookPiece = (Rook) piece;
 
-                                    if(castedRookPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedRookPiece.isWhite, ' ')){
+                                    if(castedRookPiece.isMoveValid(square.pieceRank, square.pieceFile, piecesOnBoard, castedRookPiece.isWhite, ' ')){
                                         System.out.println("check from rook" + castedRookPiece.pieceFile.toString() + "" + castedRookPiece.pieceRank);
                                         piecesChecking++;
 
@@ -102,7 +102,7 @@ public class King extends Piece {
                              if (piece.pieceType.toString().charAt(1) == 'N') {
                                     Knight castedKnightPiece = (Knight) piece;
 
-                                    if(castedKnightPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedKnightPiece.isWhite, ' ')){
+                                    if(castedKnightPiece.isMoveValid(square.pieceRank, square.pieceFile, piecesOnBoard, castedKnightPiece.isWhite, ' ')){
                                         System.out.println("check from knight" + castedKnightPiece.pieceFile.toString() + "" + castedKnightPiece.pieceRank);
                                         piecesChecking++;
 
@@ -122,4 +122,7 @@ public class King extends Piece {
          
            
         } // end of isKingInCheck
-}
+
+
+
+} // end of class
