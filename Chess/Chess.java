@@ -96,6 +96,17 @@ public class Chess {
 
 		////////////////////////////////////// KING CHECK RETURN PLAY ////////////////////////////////////////////
 		
+		for(ReturnPiece piece : piecesOnBoard){
+			if(piece.pieceType.toString().charAt(1) == 'K'){
+				King king = (King) piece;
+				if(king.isKingInCheck(piecesOnBoard)){
+						returnPlay.message = ReturnPlay.Message.CHECK;
+						
+
+		}
+			}
+		}
+		
 
 		// If move is completely Valid
 		switchTurn();

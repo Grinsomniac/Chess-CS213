@@ -16,6 +16,8 @@ public class King extends Piece {
     public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
     @Override
     public int getPieceRank() { return pieceRank; }
+    
+    
 
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
@@ -52,33 +54,72 @@ public class King extends Piece {
         return false;
         }
 
-        public boolean isKingInCheck(ArrayList<ReturnPiece> piecesOnBoard, King king) {
-            ReturnPiece.PieceFile kingFile = king.getPieceFile();
-            int kingRank = king.getPieceRank();
-            boolean isWhite = king.getisWhite();
-            boolean pieceWhite;
-            // Iterate through all the opponent's pieces
-            for (ReturnPiece piece : piecesOnBoard) {
-                if(piece.pieceType.toString().charAt(0) == 'W'){
-                    pieceWhite = true;
-                }else{pieceWhite = false;}
-                if (pieceWhite != isWhite) {
-                    // Check if the opponent's piece can attack the king's square
-                    if (piece.isMoveValid(kingRank, kingFile, piecesOnBoard, !isWhite, ' ')) {
-                        // The king is in check
-                        return true;
-                    }
-                }
+        public boolean isKingInCheck(ArrayList<ReturnPiece> piecesOnBoard) {
+      
+                            int piecesChecking = 0;
+                            for(ReturnPiece piece : piecesOnBoard){
+
+                                if (piece.pieceType.toString().charAt(1) == 'P') {
+                                    Pawn castedPawnPiece = (Pawn) piece;
+
+                                    if(castedPawnPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedPawnPiece.isWhite, ' ')){
+                                        System.out.println("check from pawn" + castedPawnPiece.pieceFile.toString() + "" + castedPawnPiece.pieceRank);
+                                        piecesChecking++;
+                                    }
+                            }
+
+                             if (piece.pieceType.toString().charAt(1) == 'Q') {
+                                    Queen castedQueenPiece = (Queen) piece;
+
+                                    if(castedQueenPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedQueenPiece.isWhite, ' ')){
+                                        System.out.println("check from queen" + castedQueenPiece.pieceFile.toString() + "" + castedQueenPiece.pieceRank);
+                                        piecesChecking++;
+                                    }
+                            }
+
+                             if (piece.pieceType.toString().charAt(1) == 'B') {
+                                    Bishop castedBishopPiece = (Bishop) piece;
+
+                                    if(castedBishopPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedBishopPiece.isWhite, ' ')){
+                                        System.out.println("check from bishop" + castedBishopPiece.pieceFile.toString() + "" + castedBishopPiece.pieceRank);
+                                        piecesChecking++;
+
+                                    }
+
+                            }
+
+                             if (piece.pieceType.toString().charAt(1) == 'R') {
+                                    Rook castedRookPiece = (Rook) piece;
+
+                                    if(castedRookPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedRookPiece.isWhite, ' ')){
+                                        System.out.println("check from rook" + castedRookPiece.pieceFile.toString() + "" + castedRookPiece.pieceRank);
+                                        piecesChecking++;
+
+                                    }
+
+                            }
+
+                             if (piece.pieceType.toString().charAt(1) == 'N') {
+                                    Knight castedKnightPiece = (Knight) piece;
+
+                                    if(castedKnightPiece.isMoveValid(pieceRank, pieceFile, piecesOnBoard, castedKnightPiece.isWhite, ' ')){
+                                        System.out.println("check from knight" + castedKnightPiece.pieceFile.toString() + "" + castedKnightPiece.pieceRank);
+                                        piecesChecking++;
+
+                                    }
+                            }
+                        } // end of navigate through arraylist
+
+                    
+            if(piecesChecking > 0){
+                System.out.println("in check from" + piecesChecking + "pieces"); // test print for how many pieces are checking the king
+                return true;        // the king is in check
             }
-            /*
-             * 1. Loop through arrayList of pieces. 
-             * 2. Call each is moveValid(KingPieceRank and KingPieceFile) 
-             * isMoveValid() for each piece should return false, if not, return KING IN CHECK returnPlay Message. 
-             * 
-             * 
-             */
-        
-            // The king is not in check
-            return false;
-        }
+            else{
+                
+                return false; // the king is not in check
+            }
+         
+           
+        } // end of isKingInCheck
 }
