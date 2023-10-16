@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
     @Override
     public int getPieceRank() { return pieceRank; }
-
+    
 
     @Override
     public boolean isMoveValid(int newRank, PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
@@ -53,7 +53,8 @@ public class Pawn extends Piece {
             }
             // This is where we should check for promotion when reaching the last rank
             pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
-            enPassant = false;///////////////////////////////////// enPassant Toggle - False (or False after 1 tile first move or subsequent moves)) ///////////////////////
+            enPassant = false;
+            pieceMoveCount++;
             return true;
         } else if (rankDifference == 2 && fileDifference == 0 && ((isWhite && pieceRank == 2) || (!isWhite && pieceRank == 7)) && fileDirection == 0) {
             // Initial move: two squares forward from the second rank (based on whether it's a white or black pawn)
@@ -64,30 +65,29 @@ public class Pawn extends Piece {
                     return false;
                 }
             } 
-            enPassant = true;/////////////////////////////////////////////////////////// enPassant Toggle ///////////////////////////////////////////////////////
+            pieceMoveCount++;
+            if (pieceMoveCount == 1){
+                enPassant = true;
+            }
             return true;
         } else if (rankDifference == 1 && fileDifference == 1 && pieceFile.ordinal() + fileDirection == newFile.ordinal()) {
-            ////////////////////////// START New Code - EnPassant Capture  ////////////////////////////////////
             // Check for en passant capture
-            if (enPassant && (playerWhite && pieceRank == 5) || (!playerWhite && pieceRank == 4)) {
-               // System.out.println(enPassant);
-                //System.out.println("passed check for enpassant");
+            if ((enPassant && (playerWhite && pieceRank == 5)) || (enPassant && (!playerWhite && pieceRank == 4))) {
+                System.out.println(enPassant);
+                System.out.println("passed check for enpassant");
                 // Determine the direction of movement for en passant capture
                 int enPassantRank = (playerWhite) ? (newRank - 1) : (newRank + 1);
                 int enPassantFile = newFile.ordinal();
-
                 // Check if there's an opponent's pawn at the en passant square
                 for (ReturnPiece piece : piecesOnBoard) {
                     if (piece.pieceRank == enPassantRank && piece.pieceFile == PieceFile.values()[enPassantFile]) {
                         // Capture the opponent's pawn en passant
-                        enPassantCapture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard, playerWhite);//////// - >>>>> NEEDS A NEW CAPTURE METHOD IN THIS CLASS FOR SPECICIFALLY ENPASSANT
-                        // Remove the captured piece from the board
-                        //piecesOnBoard.remove(piece);
+                        enPassantCapture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard, playerWhite);
+                        pieceMoveCount++;
                         return true;
                     }
                 }
             }
-            //////////////////////////  END New Code - EnPassant Capture  ////////////////////////////////////  
             // Capturing a piece diagonally
             for (ReturnPiece piece : piecesOnBoard) {
                 if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
@@ -96,11 +96,13 @@ public class Pawn extends Piece {
                         capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         // This is where we should check for promotion when reaching the last rank
                         pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
+                        pieceMoveCount++;
                         return true;
                     } else if (piece.pieceType.toString().charAt(0) == 'B' && playerWhite) {
                         capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         // This is where we should check for promotion when reaching the last rank
                         pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
+                        pieceMoveCount++;
                         return true;
                     } else {
                         return false;

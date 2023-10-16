@@ -14,7 +14,7 @@ public abstract class Piece extends ReturnPiece {
         this.pieceFile = pieceFile;
         this.pieceRank = pieceRank;
         this.isWhite = isWhite;
-
+        
     }
 
     public abstract PieceType getWhitePieceType();
