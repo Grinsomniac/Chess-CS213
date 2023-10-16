@@ -8,9 +8,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public PieceType getWhitePieceType() { return PieceType.WN; }
+    public PieceType getWhitePieceType() { return PieceType.WR; }
     @Override
-    public PieceType getBlackPieceType() { return PieceType.BN; }
+    public PieceType getBlackPieceType() { return PieceType.BR; }
     public boolean getisWhite() { return isWhite;}
     @Override
     public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }

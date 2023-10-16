@@ -67,6 +67,27 @@ public class Pawn extends Piece {
             enPassant = true;/////////////////////////////////////////////////////////// enPassant Toggle ///////////////////////////////////////////////////////
             return true;
         } else if (rankDifference == 1 && fileDifference == 1 && pieceFile.ordinal() + fileDirection == newFile.ordinal()) {
+            ////////////////////////// START New Code - EnPassant Capture  ////////////////////////////////////
+            // Check for en passant capture
+            if (enPassant && (playerWhite && pieceRank == 5) || (!playerWhite && pieceRank == 4)) {
+               // System.out.println(enPassant);
+                //System.out.println("passed check for enpassant");
+                // Determine the direction of movement for en passant capture
+                int enPassantRank = (playerWhite) ? (newRank - 1) : (newRank + 1);
+                int enPassantFile = newFile.ordinal();
+
+                // Check if there's an opponent's pawn at the en passant square
+                for (ReturnPiece piece : piecesOnBoard) {
+                    if (piece.pieceRank == enPassantRank && piece.pieceFile == PieceFile.values()[enPassantFile]) {
+                        // Capture the opponent's pawn en passant
+                        enPassantCapture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard, playerWhite);//////// - >>>>> NEEDS A NEW CAPTURE METHOD IN THIS CLASS FOR SPECICIFALLY ENPASSANT
+                        // Remove the captured piece from the board
+                        //piecesOnBoard.remove(piece);
+                        return true;
+                    }
+                }
+            }
+            //////////////////////////  END New Code - EnPassant Capture  ////////////////////////////////////  
             // Capturing a piece diagonally
             for (ReturnPiece piece : piecesOnBoard) {
                 if (piece.pieceRank == newRank && piece.pieceFile == newFile) {
@@ -86,33 +107,25 @@ public class Pawn extends Piece {
                     }
                 }
             }
-            //////////////////////////  New Code - EnPassant Capture  ////////////////////////////////////
-            // Check for en passant capture
-            if (enPassant && (playerWhite && pieceRank == 5) || (!playerWhite && pieceRank == 4)) {
-                // Determine the direction of movement for en passant capture
-                int enPassantRank = (playerWhite) ? (pieceRank + 1) : (pieceRank - 1);
-                int enPassantFile = newFile.ordinal();
-
-                // Check if there's an opponent's pawn at the en passant square
-                for (ReturnPiece piece : piecesOnBoard) {
-                    if (piece.pieceRank == enPassantRank && piece.pieceFile == PieceFile.values()[enPassantFile]) {
-                        // Capture the opponent's pawn en passant
-                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);//////// - >>>>> NEEDS A NEW CAPTURE METHOD IN THIS CLASS FOR SPECICIFALLY ENPASSANT
-                        // Remove the captured piece from the board
-                        piecesOnBoard.remove(piece);
-                        pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
-                        return true;
-                    }
-                }
-            }
-            //////////////////////////  New Code - EnPassant Capture  ////////////////////////////////////  
         }
         // The move is not valid for a pawn
         return false;
     }
 
-    public void enPassantCapture(){
-
+    public void enPassantCapture(ReturnPiece.PieceFile movingFile, int movingRank, ReturnPiece.PieceFile takeFile, int takeRank, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite){
+        /// Remove the captured piece from the list
+        for(int i = 0; i < piecesOnBoard.size(); i++){
+            if(playerWhite){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank - 1){
+                 piecesOnBoard.remove(i);
+            }
+            }
+            if(!playerWhite){
+            if(piecesOnBoard.get(i).pieceFile.toString().charAt(0) == takeFile.toString().charAt(0) && piecesOnBoard.get(i).pieceRank == takeRank + 1){
+                 piecesOnBoard.remove(i);
+            }
+            }
+        }
     }
 
     

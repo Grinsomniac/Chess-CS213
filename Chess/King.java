@@ -8,9 +8,9 @@ public class King extends Piece {
     }
 
     @Override
-    public PieceType getWhitePieceType() { return PieceType.WN; }
+    public PieceType getWhitePieceType() { return PieceType.WK; }
     @Override
-    public PieceType getBlackPieceType() { return PieceType.BN; }
+    public PieceType getBlackPieceType() { return PieceType.BK; }
     public boolean getisWhite() { return isWhite;}
     @Override
     public ReturnPiece.PieceFile getPieceFile() { return pieceFile; }
