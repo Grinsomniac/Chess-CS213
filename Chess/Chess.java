@@ -99,7 +99,7 @@ public class Chess {
 		for(ReturnPiece piece : piecesOnBoard){
 			if(piece.pieceType.toString().charAt(1) == 'K'){
 				King king = (King) piece;
-				if(king.isKingInCheck(piecesOnBoard, king)){
+				if(king.isSquareInCheck(piecesOnBoard, king)){
 						returnPlay.message = ReturnPlay.Message.CHECK;
 						
 
