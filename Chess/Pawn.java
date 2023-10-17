@@ -94,7 +94,7 @@ public class Pawn extends Piece {
                     // The move is valid for capturing an opponent's piece
                     if (piece.pieceType.toString().charAt(0) == 'W' && !playerWhite) {
                         if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                       // capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         }
                         // This is where we should check for promotion when reaching the last rank
                         pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
@@ -104,9 +104,9 @@ public class Pawn extends Piece {
                         return true;
                     } else if (piece.pieceType.toString().charAt(0) == 'B' && playerWhite) {
                         if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                       // capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         }
-                        // This is where we should check for promotion when reaching the last rank
+                         //This is where we should check for promotion when reaching the last rank
                         pawnPromo(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
                         pieceMoveCount++;
                         return true;
@@ -168,7 +168,4 @@ public class Pawn extends Piece {
             piecesOnBoard.add(promotedPiece);
         }
     }
-
-   
-
 }

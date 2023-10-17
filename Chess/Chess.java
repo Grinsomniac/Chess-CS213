@@ -83,6 +83,15 @@ public class Chess {
 			return returnPlay;
 		}
 		returnPlay.message = null;
+
+		Pawn capture = new Pawn(ReturnPiece.PieceFile.e,1,true);
+		char targetFile = destination.charAt(0);
+		int targetRank = (destination.charAt(1) - 48);
+
+		capture.capture(ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), targetRank, piecesOnBoard);
+		
+
+		
 		movePiece(targetPiece, destination);
 		
 		//Afterstate of target piece
@@ -94,18 +103,21 @@ public class Chess {
 			return returnPlay;
 		}
 
-		////////////////////////////////////// KING CHECK RETURN PLAY ////////////////////////////////////////////
 		
+		////////////////////////////////////// KING CHECK RETURN PLAY ////////////////////////////////////////////
+		System.out.println("Enter king check return play");
 		for(ReturnPiece piece : piecesOnBoard){
 			if(piece.pieceType.toString().charAt(1) == 'K'){
-				King king = (King) piece;
-				if(king.isSquareInCheck(piecesOnBoard, king)){
-						returnPlay.message = ReturnPlay.Message.CHECK;
-						
+				Piece square = (Piece) piece;
+				if(square.isSquareInCheck(piecesOnBoard, square.pieceFile, square.pieceRank )){
 
-		}
+					System.out.println("HERE");
+						returnPlay.message = ReturnPlay.Message.CHECK;
+						returnPlay.piecesOnBoard = piecesOnBoard;	
+				}
 			}
 		}
+		
 		
 
 		// If move is completely Valid

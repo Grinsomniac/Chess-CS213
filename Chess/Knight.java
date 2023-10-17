@@ -17,6 +17,35 @@ public class Knight extends Piece {
     @Override
     public int getPieceRank() { return pieceRank; }
 
+    /* 
+
+    public boolean firstIsMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece){
+
+             for(ReturnPiece piece : piecesOnBoard){         // first check to make sure the move doesnt put king in check
+                if(playerWhite){
+                if(piece.pieceType.toString() == "WK"){
+                    Piece king = (Piece) piece;
+                    if(king.isSquareInCheck(piecesOnBoard)){
+                        return false;
+                                                        }
+                                                  }
+                         }
+                        if(!playerWhite){
+                        if(piece.pieceType.toString() == "BK"){
+                            Piece king = (Piece) piece;
+                            if(king.isSquareInCheck(piecesOnBoard)){
+                                return false;
+                                                        }
+                                                  }
+                         }
+                                        }       // end of first check
+
+       return isMoveValid(newRank, newFile, piecesOnBoard, playerWhite, promotionPiece);
+        
+       
+    }
+    */
+
     @Override
     public boolean isMoveValid(int newRank, ReturnPiece.PieceFile newFile, ArrayList<ReturnPiece> piecesOnBoard, boolean playerWhite, char promotionPiece) {
         // Calculate the absolute differences between ranks and files
@@ -31,14 +60,14 @@ public class Knight extends Piece {
                 
                     if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
                         if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                       // capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         }
                     return true;
                 }
                 else{
                 if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
                     if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.                                                       
-                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                   //  capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                     }
                         return true;
                 }
@@ -54,5 +83,7 @@ public class Knight extends Piece {
     // The move is not valid for a knight
     return false;
     }
+
+    
 
 }

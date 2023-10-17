@@ -56,16 +56,16 @@ public class Queen extends Piece {
                 if (piece.pieceType.toString().charAt(0) != pieceType.toString().charAt(0)) {
                     // The move is valid for capturing an opponent's piece
                     if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
-                        if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
-                        }
+                      //  if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
+                     //   capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                      //  }
                     return true;
                 }
                 else{
                 if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
-                     if(piece.pieceType.toString().charAt(1) != 'K'){           // check that piece being captured is not a king.                                                          
-                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
-                     }
+                 //    if(piece.pieceType.toString().charAt(1) != 'K'){           // check that piece being captured is not a king.                                                          
+                 //    capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                 //    }
                      return true;
                 }
                 else{
