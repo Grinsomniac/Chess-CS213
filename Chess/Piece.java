@@ -14,7 +14,6 @@ public abstract class Piece extends ReturnPiece {
         this.pieceFile = pieceFile;
         this.pieceRank = pieceRank;
         this.isWhite = isWhite;
-        this.pieceMoveCount = 0; // initializes moveCount to 0
         
     }
 
@@ -38,17 +37,6 @@ public abstract class Piece extends ReturnPiece {
                  piecesOnBoard.remove(i);
             }
         }
-    }
-
-    public boolean isTileEmpty(ReturnPiece.PieceFile targetFile, int targetRank, ArrayList<ReturnPiece> piecesOnBoard) {
-        for (ReturnPiece piece : piecesOnBoard) {
-            if (piece.pieceFile == targetFile && piece.pieceRank == targetRank) {
-                // A piece is occupying the target tile, so it's not empty
-                return false;
-            }
-        }
-        // No piece is occupying the target tile, so it's empty
-        return true;
     }
 
 }
