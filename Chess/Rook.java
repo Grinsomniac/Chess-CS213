@@ -24,8 +24,6 @@ public class Rook extends Piece {
         // The rook hasn't moved, which is not a valid move
         return false;
     }
-    
-   
 
     // Calculate the absolute differences between ranks and files
     int rankDifference = Math.abs(newRank - pieceRank);
@@ -67,16 +65,16 @@ public class Rook extends Piece {
             if(piece.pieceRank == newRank && piece.pieceFile.toString().charAt(0) == newFile.toString().charAt(0)){
                 
                     if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
-                     //   if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                     //   capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
-                      //  }
+                        if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
+                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        }
                     return true;
                 }
                 else{
                 if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
-                 //   if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.                                                   
-                 //    capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
-                  //  }
+                    if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.                                                   
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                    }
                         return true;
                 }
                 else{

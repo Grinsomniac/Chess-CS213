@@ -57,14 +57,14 @@ public class Bishop extends Piece {
                 
                     if(piece.pieceType.toString().charAt(0) == 'W' && !playerWhite){   
                         if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.
-                       // capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                        capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                         }
                     return true;
                 }
                 else{
                 if(piece.pieceType.toString().charAt(0) == 'B' && playerWhite){   
                     if(piece.pieceType.toString().charAt(1) != 'K'){       // check that piece being captured is not a king.                                                          
-                    // capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
+                     capture(pieceFile, pieceRank, newFile, newRank, piecesOnBoard);
                     }
                         return true;
                 }
