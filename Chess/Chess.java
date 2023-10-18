@@ -1,3 +1,6 @@
+//Ian Underwood
+//Jason John
+
 package chess;
 
 import java.util.*;
@@ -32,7 +35,7 @@ class ReturnPiece {
 	}
 }
 
-///////////////////////     NO CHANGES     /////////////////////////////////
+/////////////////////// NO CHANGES /////////////////////////////////
 class ReturnPlay {
 	enum Message {
 		ILLEGAL_MOVE, DRAW,
@@ -45,10 +48,12 @@ class ReturnPlay {
 	Message message;
 }
 
-///////////////////////   ADD TO CHESS CLASS ONLY    //////////////////////
+/////////////////////// ADD TO CHESS CLASS ONLY //////////////////////
 public class Chess {
 
-	enum Player {white, black} // No Touch
+	enum Player {
+		white, black
+	} // No Touch
 
 	public static Player currentPlayer;
 	public static String whitePrompt = "\nWhite's Move: ";
@@ -63,55 +68,42 @@ public class Chess {
 	public static boolean playerWhite;
 	public static char promotionPiece = ' ';
 	public static boolean isDraw;
-	
+
 	public static ReturnPlay play(String move) {
 
-		System.out.println("\nCurrent Player : " + currentPlayer.toString());// TESTING
-
-		//Check for resign input
 		if (resignCheck(move)) {
 			return returnPlay;
 		}
-		//Parse Move input if resign not present
+
 		parseMove(move);
 
-		// Validates correct players piece is moved
 		if (!validateMove(targetPiece)) {
-			// ReturnPlay Object with Invalid turn message
+
 			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			returnPlay.piecesOnBoard = piecesOnBoard;
 			return returnPlay;
 		}
 		returnPlay.message = null;
 		movePiece(targetPiece, destination);
-		
-		//Afterstate of target piece
-		System.out.println(targetPiece.toString());
 
-		if (isDraw){
+		if (isDraw) {
 			returnPlay.message = ReturnPlay.Message.DRAW;
 			returnPlay.piecesOnBoard = piecesOnBoard;
 			return returnPlay;
 		}
 
-		////////////////////////////////////// KING CHECK RETURN PLAY ////////////////////////////////////////////
-		
-		for(ReturnPiece piece : piecesOnBoard){
-			if(piece.pieceType.toString().charAt(1) == 'K'){
+		for (ReturnPiece piece : piecesOnBoard) {
+			if (piece.pieceType.toString().charAt(1) == 'K') {
 				King king = (King) piece;
-				if(king.isKingInCheck(piecesOnBoard)){
-						returnPlay.message = ReturnPlay.Message.CHECK;
-						
+				if (king.isKingInCheck(piecesOnBoard)) {
+					returnPlay.message = ReturnPlay.Message.CHECK;
 
-		}
+				}
 			}
 		}
-		
 
-		// If move is completely Valid
 		switchTurn();
-		
-		
+
 		returnPlay.piecesOnBoard = piecesOnBoard;
 		return returnPlay;
 
@@ -119,7 +111,6 @@ public class Chess {
 
 	public static Boolean resignCheck(String move) {
 
-		// Checking for Resign message
 		if (move.trim().toLowerCase().equals("resign")) {
 			if (currentPlayer == Player.black) {
 				returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
@@ -135,45 +126,37 @@ public class Chess {
 	}
 
 	public static void parseMove(String move) {
-		
+
 		move = move.trim().toLowerCase();
 		parts = move.split(" ");
 
-		if (parts.length == 2 ){
+		if (parts.length == 2) {
 			source = parts[0];
 			destination = parts[1];
-		} else if (parts.length == 3 ){
+		} else if (parts.length == 3) {
 			source = parts[0];
-			destination = parts[1];	
-			if (parts[2].charAt(0) != 'd'){
+			destination = parts[1];
+			if (parts[2].charAt(0) != 'd') {
 				promotionPiece = parts[2].charAt(0);
 			} else {
 				isDraw = true;
-			}	
+			}
 		}
 
 		searchPieces(piecesOnBoard, source);
 	}
 
-	// Searches ArrayList<ReturnPiece> for targetPiece
 	public static void searchPieces(ArrayList<ReturnPiece> piecesOnBoard, String source) {
 
 		char targetFile = source.charAt(0);
 		int targetRank = (source.charAt(1) - 48);
 
-		// Iterate through the ArrayList to find the Piece
 		for (ReturnPiece piece : piecesOnBoard) {
 			if (piece.pieceFile.name().charAt(0) == targetFile && piece.pieceRank == targetRank) {
-				// Found the Piece with the matching File and Rank
+
 				targetPiece = piece;
-				break; // Exit the loop once the Piece is found
+				break;
 			}
-		}
-		// TESTING FOR PIECE FINDING VISIBILITY
-		if (targetPiece != null) {
-			System.out.println("Found piece: " + targetPiece);
-		} else {
-			System.out.println("Piece not found at File " + targetFile + " Rank " + targetRank);
 		}
 	}
 
@@ -183,20 +166,21 @@ public class Chess {
 		int targetRank = (destination.charAt(1) - 48);
 		boolean colorCheck = false;
 
-		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)){
+		if ((targetPiece.pieceType.toString().charAt(0) == 'W' && currentPlayer == Player.white)) {
 			colorCheck = true;
 		} else {
 			if ((targetPiece.pieceType.toString().charAt(0) == 'B' && currentPlayer == Player.black))
-			colorCheck = true;
+				colorCheck = true;
 		}
 
-		if(!colorCheck){
+		if (!colorCheck) {
 			return false;
 		}
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'P') {
 			Pawn castedPawnPiece = (Pawn) targetPiece;
-			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedPawnPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -205,7 +189,8 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'R') {
 			Rook castedRookPiece = (Rook) targetPiece;
-			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedRookPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -214,7 +199,8 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'B') {
 			Bishop castedBishopPiece = (Bishop) targetPiece;
-			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedBishopPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -223,7 +209,8 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'N') {
 			Knight castedKnightPiece = (Knight) targetPiece;
-			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedKnightPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -232,7 +219,8 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'Q') {
 			Queen castedQueenPiece = (Queen) targetPiece;
-			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedQueenPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -241,7 +229,8 @@ public class Chess {
 
 		if (targetPiece.pieceType.toString().charAt(1) == 'K') {
 			King castedKingPiece = (King) targetPiece;
-			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)), piecesOnBoard, playerWhite, promotionPiece)) {
+			if (castedKingPiece.isMoveValid(targetRank, ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile)),
+					piecesOnBoard, playerWhite, promotionPiece)) {
 				return true;
 			} else {
 				return false;
@@ -249,22 +238,19 @@ public class Chess {
 		}
 
 		return false;
-			
+
 	}
 
 	public static void movePiece(ReturnPiece targetPiece, String destination) {
 
-		//Separating String destination into File and Rank
 		char targetFile = destination.charAt(0);
 		int targetRank = (destination.charAt(1) - 48);
 
-		// Update file and rank for targetPiece
 		targetPiece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(targetFile));
 		targetPiece.pieceRank = targetRank;
 
 	}
 
-	// Toggle for player turn.
 	public static void switchTurn() {
 		if (currentPlayer == Player.white) {
 			currentPlayer = Player.black;
@@ -275,8 +261,6 @@ public class Chess {
 		}
 	}
 
-	///////////////////////     GAME START     /////////////////////////////////
-	// reset the game, and start from scratch. - DONE
 	public static void start() {
 		InitializeBoard();
 		currentPlayer = Player.white;
@@ -284,10 +268,8 @@ public class Chess {
 		System.out.print(whitePrompt);
 	}
 
-	// Creates Pieces and draws starting board. - DONE
 	public static void InitializeBoard() {
 
-		// Add white pieces in their correct starting positions
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.a, 1, true));
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.h, 1, true));
 		piecesOnBoard.add(new Knight(ReturnPiece.PieceFile.b, 1, true));
@@ -301,7 +283,6 @@ public class Chess {
 			piecesOnBoard.add(new Pawn(file, 2, true));
 		}
 
-		// Add black pieces in their correct starting positions
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.a, 8, false));
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.h, 8, false));
 		piecesOnBoard.add(new Knight(ReturnPiece.PieceFile.b, 8, false));
@@ -314,13 +295,6 @@ public class Chess {
 		for (ReturnPiece.PieceFile file : ReturnPiece.PieceFile.values()) {
 			piecesOnBoard.add(new Pawn(file, 7, false));
 		}
-
-		/*
-		 * //Testing - To validate that all pieces were created
-		 * for (ReturnPiece piece : piecesOnBoard) {
-		 * System.out.println(piece.toString());
-		 * }
-		 */
 
 		PlayChess.printBoard(piecesOnBoard);
 	}
