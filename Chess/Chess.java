@@ -58,7 +58,7 @@ public class Chess {
 	public static Player currentPlayer;
 	public static String whitePrompt = "\nWhite's Move: ";
 	public static String blackPrompt = "\nBlack's Move: ";
-	public static ArrayList<ReturnPiece> piecesOnBoard = new ArrayList<>();
+	public static ArrayList<ReturnPiece> piecesOnBoard; //= new ArrayList<>();
 	public static ReturnPlay returnPlay = new ReturnPlay();
 	public static int moveCount;
 	public static String[] parts;
@@ -269,6 +269,8 @@ public class Chess {
 	}
 
 	public static void InitializeBoard() {
+
+		piecesOnBoard = new ArrayList();
 
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.a, 1, true));
 		piecesOnBoard.add(new Rook(ReturnPiece.PieceFile.h, 1, true));
